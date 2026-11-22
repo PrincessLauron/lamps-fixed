@@ -1,0 +1,9 @@
+node_modules/
+.env
+__pycache__/
+*.py[cod]
+database/*.sqlite
+database/*.sqlite-shm
+database/*.sqlite-wal
+python_service/.venv/
+.DS_Store

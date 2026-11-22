@@ -1,0 +1,2794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20200%20200%22%20role%3D%22img%22%20aria-label%3D%22LAMS%20logo%22%3E%0A%20%20%3Crect%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2238%22%20fill%3D%22%23136b3f%22/%3E%0A%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%22188%22%20height%3D%22188%22%20rx%3D%2233%22%20fill%3D%22none%22%20stroke%3D%22%232fa56c%22%20stroke-width%3D%222%22/%3E%0A%20%20%3C%21--%20wolf%20head%20--%3E%0A%20%20%3Cpath%20d%3D%22M100%20136%20L80%20123%20L64%20128%20L58%20111%20L42%20105%20L40%2066%20L52%2020%20L82%2050%20Q100%2045%20118%2050%20L148%2020%20L160%2066%20L158%20105%20L142%20111%20L136%20128%20L120%20123%20Z%22%20fill%3D%22%23fff%22/%3E%0A%20%20%3Cpath%20d%3D%22M54%2033%20L57%2062%20L75%2051%20Z%20M146%2033%20L143%2062%20L125%2051%20Z%22%20fill%3D%22%23b9d8c7%22/%3E%0A%20%20%3Cpath%20d%3D%22M42%20105%20L74%2090%20L73%20119%20L58%20111%20Z%20M158%20105%20L126%2090%20L127%20119%20L142%20111%20Z%22%20fill%3D%22%23e1efe7%22/%3E%0A%20%20%3Cpath%20d%3D%22M100%2049%20L93%2070%20L107%2070%20Z%22%20fill%3D%22%23e1efe7%22/%3E%0A%20%20%3Cpath%20d%3D%22M86%2098%20L114%2098%20L100%20133%20Z%22%20fill%3D%22%23e1efe7%22/%3E%0A%20%20%3Cpath%20d%3D%22M69%2077%20L89%2083%20L85%2092%20L67%2085%20Z%20M131%2077%20L111%2083%20L115%2092%20L133%2085%20Z%22%20fill%3D%22%23136b3f%22/%3E%0A%20%20%3Cpath%20d%3D%22M92%20104%20L108%20104%20L100%20116%20Z%22%20fill%3D%22%23136b3f%22/%3E%0A%20%20%3C%21--%20wordmark%20--%3E%0A%20%20%3Ctext%20x%3D%22100%22%20y%3D%22177%22%20text-anchor%3D%22middle%22%20textLength%3D%22140%22%20lengthAdjust%3D%22spacingAndGlyphs%22%20font-family%3D%22Helvetica%2CArial%2Csans-serif%22%20font-weight%3D%22800%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3ELAMS%3C/text%3E%0A%3C/svg%3E%0A">
+<title>LAMS | Laboratory Asset Management System</title>
+<style>
+:root{
+  --green:#008584;--green-dark:#006c6b;--green-light:#d5e9eb;--bg:#f4f7f7;--white:#fff;
+  --text:#202b2b;--muted:#819090;--border:#e7eded;--red:#df5757;--orange:#e9a33b;--blue:#4788d5;
+  --shadow:0 3px 14px rgba(0,60,60,.05);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:white;border-right:1px solid var(--border);padding:24px 16px;position:fixed;inset:0 auto 0 0;z-index:5;display:flex;flex-direction:column;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 28px}
+.brand-icon{width:39px;height:39px;border-radius:12px;background:var(--green);display:grid;place-items:center;color:white;font-size:21px;font-weight:800}
+.brand strong{font-size:19px;letter-spacing:-.5px}
+.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.nav-label{color:#a0aaaa;font-size:10px;font-weight:800;letter-spacing:1.2px;padding:15px 12px 8px}
+.nav-btn{border:0;background:transparent;width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:#687676;font-size:13px;margin:2px 0;transition:.2s}
+.nav-btn:hover{background:#f2f7f7;color:var(--green)}
+.nav-btn.active{background:var(--green-light);color:var(--green);font-weight:700}
+.nav-icon{width:20px;text-align:center;font-size:17px}
+.nav-count{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:800;border-radius:10px;padding:2px 7px}
+.nav-count.hide{display:none}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:16px}
+.profile{display:flex;align-items:center;gap:10px;padding:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:#aad6d5;color:var(--green);display:grid;place-items:center;font-weight:800}
+.profile small{display:block;color:var(--muted);margin-top:3px}
+.main{margin-left:245px;width:calc(100% - 245px);min-width:0}
+.topbar{height:70px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:4}
+.search{width:min(400px,45vw);background:#f4f7f7;border:1px solid transparent;border-radius:10px;padding:11px 14px;outline:none;font-size:13px}
+.search:focus{border-color:#84bfc0;background:white}
+.top-actions{display:flex;align-items:center;gap:15px}
+.icon-btn{border:0;background:#f4f7f7;width:37px;height:37px;border-radius:50%;font-size:16px;position:relative}
+.icon-btn:hover{background:#e9f1f1}
+
+/* Lost-equipment monitoring alerts */
+.bell-wrap{position:relative}
+.bell-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:9px;font-weight:800;border-radius:10px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px;border:2px solid white;pointer-events:none}
+.bell-badge.hide{display:none}
+.notif-panel{display:none;position:absolute;right:0;top:50px;width:min(370px,92vw);background:white;border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 40px #14252526;z-index:30;overflow:hidden}
+.notif-panel.show{display:block;animation:fade .15s ease}
+.notif-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border)}
+.notif-head h2{font-size:15px}
+.notif-list{max-height:340px;overflow-y:auto}
+.notif-foot{padding:11px 16px;border-top:1px solid var(--border);text-align:center}
+.notif-item{display:flex;gap:11px;padding:13px 16px;border-bottom:1px solid #f0f3f3;align-items:flex-start}
+.notif-item:hover{background:#f8fbfb}
+.notif-icon{width:36px;height:36px;border-radius:50%;background:#fff0f0;display:grid;place-items:center;flex-shrink:0;font-size:16px;color:var(--red)}
+.notif-icon.booking{background:#eaf2ff;color:var(--blue)}
+.notif-body{flex:1;min-width:0}
+.notif-body b{font-size:12px;display:block}
+.notif-body small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.notif-body .btn{padding:6px 10px;font-size:10px;margin-top:9px}
+
+/* Layout */
+.page{padding:28px 30px;max-width:1500px;margin:auto}
+.page-section{display:none}
+.page-section.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.page-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:23px;flex-wrap:wrap}
+h1{font-size:23px;margin:0 0 6px;letter-spacing:-.6px}
+.subtitle{font-size:13px;color:var(--muted)}
+h2{font-size:15px;margin:0}
+.btn{border:0;border-radius:9px;padding:10px 15px;font-size:12px;font-weight:700;transition:.2s}
+.btn:hover{filter:brightness(.96);transform:translateY(-1px)}
+.primary{background:var(--green);color:white}
+.secondary{background:var(--green-light);color:var(--green)}
+.outline{background:white;border:1px solid var(--border);color:#536161}
+.danger{background:#fff0f0;color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{width:38px;height:38px;border-radius:11px;background:var(--green-light);display:grid;place-items:center;font-size:18px}
+.stat-number{font-size:27px;font-weight:800;margin:15px 0 4px;letter-spacing:-1px}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-note{font-size:10px;color:var(--green);margin-top:10px}
+.grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:17px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.section-head p{font-size:11px;color:var(--muted);margin:5px 0 0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
+th{text-align:left;color:#899595;font-size:10px;font-weight:700;padding:11px 10px;border-bottom:1px solid var(--border)}
+td{padding:13px 10px;border-bottom:1px solid #f0f3f3}
+tr:last-child td{border-bottom:0}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700;background:#d5e9eb;color:#008584}
+.status.warn{background:#fff4df;color:#b47a19}
+.status.bad{background:#ffeded;color:#d34d4d}
+.status.info{background:#eaf2ff;color:#477dc2}
+.chip{display:inline-block;min-width:30px;text-align:center;padding:4px 8px;border-radius:12px;font-size:11px;font-weight:700}
+.chip.ok{background:#d5e9eb;color:#008584}
+.chip.warn{background:#fff4df;color:#b47a19}
+.chip.bad{background:#ffeded;color:#d34d4d}
+.chip.zero{background:#f2f5f5;color:#a9b3b3}
+.asset-name{font-weight:700}
+.asset-sub{color:var(--muted);font-size:10px;margin-top:4px}
+.activity{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--border)}
+.activity:last-child{border:0}
+.activity-dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:5px;flex-shrink:0}
+.activity-text{font-size:12px;line-height:1.5}
+.activity-time{font-size:10px;color:var(--muted);margin-top:3px}
+.progress{height:7px;border-radius:10px;background:#edf1f1;overflow:hidden;margin-top:10px}
+.progress span{display:block;height:100%;background:var(--green);border-radius:10px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px;align-items:center}
+.field{border:1px solid var(--border);background:white;padding:10px 12px;border-radius:9px;font-size:12px;outline:none;min-width:0}
+.field:focus{border-color:#8dc5c4}
+.toolbar .field{flex:1;min-width:180px}
+.empty{text-align:center;color:var(--muted);padding:30px;font-size:12px}
+.tabs{display:flex;gap:6px;margin-bottom:15px;flex-wrap:wrap}
+.tab{border:1px solid var(--border);background:white;padding:8px 14px;border-radius:9px;font-size:12px;font-weight:700;color:#536161}
+.tab.active{background:var(--green);color:white;border-color:var(--green)}
+.summary-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.summary-strip .stat-number{margin:10px 0 2px}
+.alert-row{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.alert-row:last-child{border:0}
+.alert-row.resolved{opacity:.6}
+.success-box{background:var(--green-light);color:var(--green);padding:12px 14px;border-radius:10px;font-size:12px;font-weight:700;margin-bottom:14px}
+.hidden{display:none !important}
+.schedule-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.day{border:1px solid var(--border);border-radius:11px;padding:13px;font-size:12px;background:#fbfdfd}
+.day strong{color:var(--green)}
+.slot{margin-top:8px;line-height:1.6;color:#536161}
+.form-hint{font-size:11px;color:var(--muted);margin:-6px 0 12px;line-height:1.5}
+
+/* Modals */
+.modal-backdrop{display:none;position:fixed;inset:0;background:#14252577;z-index:20;align-items:center;justify-content:center;padding:15px}
+.modal-backdrop.show{display:flex}
+.modal{background:white;width:min(480px,100%);max-height:92vh;overflow-y:auto;border-radius:16px;padding:23px;box-shadow:0 20px 60px #0002}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-close{border:0;background:#f2f5f5;border-radius:50%;width:30px;height:30px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.form-group label{font-size:11px;color:#647272;font-weight:700}
+.form-group input,.form-group select,.form-group textarea{width:100%}
+.form-group textarea{border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:12px;min-height:70px;resize:vertical;outline:none}
+.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.icon-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.icon-opt{border:1px solid var(--border);background:white;border-radius:9px;height:38px;font-size:18px}
+.icon-opt.active{border:2px solid var(--green);background:var(--green-light)}
+.prev-wrap{background:#eef3f3;border-radius:10px;padding:14px;display:flex;justify-content:center;align-items:center;min-height:120px;margin-bottom:13px}
+.prev-obj{display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid #0002;border-radius:7px;box-shadow:0 2px 4px #183c3b14;overflow:hidden}
+.prev-obj span{font-size:18px;line-height:1}
+.prev-obj b{font-size:9px;margin-top:2px;white-space:nowrap;color:#2c3a3a}
+
+/* Room builder */
+.room-builder{display:grid;grid-template-columns:230px 1fr;gap:17px;align-items:start}
+.palette-title{font-size:11px;font-weight:800;color:#899595;letter-spacing:.8px;margin-bottom:10px}
+.palette-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:white;margin-bottom:7px;font-size:12px;cursor:grab;transition:.15s}
+.palette-item:hover{border-color:#b9dcdb;background:#fafdfd}
+.palette-item.active{border:2px solid var(--green);background:var(--green-light)}
+.palette-item small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.palette-swatch{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;border:1px solid #0001;font-size:17px;flex-shrink:0}
+.pdel{margin-left:auto;color:var(--red);font-weight:800;padding:2px 6px;border-radius:6px;font-size:14px}
+.pdel:hover{background:#ffeded}
+.palette-add{width:100%;margin-top:6px}
+.palette-hint{font-size:11px;color:var(--muted);line-height:1.5;margin-top:12px}
+.room-stage{overflow:auto;background:#eef3f3;border-radius:12px;padding:18px;display:flex;justify-content:flex-start}
+.room-floor{position:relative;flex-shrink:0;width:704px;height:440px;background-color:#fbfcfc;background-image:linear-gradient(to right,#e3ebeb 1px,transparent 1px),linear-gradient(to bottom,#e3ebeb 1px,transparent 1px);background-size:44px 44px;border:6px solid #7b8a8a;border-radius:6px;touch-action:none}
+.room-floor.placing{cursor:crosshair}
+.room-obj{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid #0002;border-radius:7px;cursor:move;user-select:none;overflow:hidden;box-shadow:0 2px 4px #183c3b14}
+.room-obj span{font-size:18px;line-height:1}
+.room-obj b{font-size:9px;margin-top:2px;white-space:nowrap;color:#2c3a3a}
+.room-obj.sel{outline:2px solid var(--green);outline-offset:2px}
+.selection-info{font-size:11px;color:var(--muted);margin-top:12px;min-height:16px}
+.selection-info strong{color:var(--green)}
+kbd{background:#f2f5f5;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:1px 5px;font-size:10px;font-family:inherit;color:#536161}
+
+/* Room size controls */
+.size-ctl{display:inline-flex;gap:6px;align-items:center;font-size:12px;color:#536161}
+.room-builder>.card:last-child{min-width:0}
+
+/* Table item picker */
+.tp-row{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;background:#fff}
+.tp-row .btn{padding:5px 9px}
+#tpChoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#tpChoices .palette-item{margin-bottom:0}
+
+/* Table controls and items on a table */
+.table-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:11px}
+.table-ctl .field{padding:5px 8px}
+.on-table{display:flex;gap:2px;margin-top:3px;flex-wrap:wrap;justify-content:center}
+.on-table i{font-style:normal;font-size:13px;background:#ffffffaa;border-radius:4px;padding:0 2px}
+
+/* Weekly timetable */
+.cal-grid{display:grid;grid-template-columns:80px repeat(var(--cols),minmax(120px,1fr));min-width:calc(80px + var(--cols) * 120px)}
+.cal-head{position:sticky;top:0;z-index:2;background:#f7fafa;font-size:12px;font-weight:700;text-align:center;padding:10px 4px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cal-head small{display:block;font-weight:400;color:var(--muted)}
+.cal-head.today{color:var(--green)}
+.cal-timecol .cal-time{height:24px;font-size:10px;color:var(--muted);text-align:right;padding:0 8px;line-height:24px;border-right:1px solid var(--border);border-bottom:1px solid #f0f3f3}
+.cal-col{position:relative;border-right:1px solid #f0f3f3}
+.cal-col.drop-target{background:#f0fafa}
+.cal-slot{height:24px;border-bottom:1px solid #f3f6f6;user-select:none;cursor:crosshair}
+.cal-slot:hover{background:#f6fbfb}
+.cal-slot.sel{background:#bfe3e2}
+.dragging .cal-block{pointer-events:none}
+.cal-block{pointer-events:auto;position:absolute;left:4px;right:4px;border-radius:8px;padding:5px 7px;font-size:11px;border:1.5px solid #0002;cursor:grab;overflow:hidden;box-shadow:0 2px 4px #183c3b14;line-height:1.35;touch-action:none;user-select:none;z-index:1}
+.cal-block.moving{opacity:.75;cursor:grabbing;box-shadow:0 8px 18px #14252540;z-index:5}
+.cal-block b{font-size:12px;display:block}
+.cal-block small{display:block;color:#3b4a4a}
+.month-head{display:grid;grid-template-columns:repeat(7,1fr);font-size:11px;font-weight:700;text-align:center;color:#899595;background:#f7fafa;border-bottom:1px solid var(--border)}
+.month-head div{padding:9px}
+.month-grid{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));min-width:840px}
+.month-cell{min-height:110px;border-right:1px solid #f0f3f3;border-bottom:1px solid #f0f3f3;padding:6px;font-size:11px;cursor:pointer}
+.month-cell:hover{background:#fafdfd}
+.month-cell.other{background:#fafbfb;color:#b5bfbf}
+.dnum{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-weight:700}
+.month-cell.today .dnum{background:var(--green);color:#fff}
+.month-item{margin-top:4px;padding:3px 5px;border-radius:5px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+
+.toast{position:fixed;bottom:22px;right:22px;background:#173e3d;color:white;padding:13px 18px;border-radius:10px;font-size:12px;opacity:0;transform:translateY(10px);transition:.25s;z-index:40;pointer-events:none;max-width:340px}
+.toast.show{opacity:1;transform:translateY(0)}
+.mobile-menu{display:none}
+@media(max-width:950px){
+  .sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+  .room-builder{grid-template-columns:1fr}
+  .schedule-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .sidebar{display:none}.main{margin:0;width:100%}
+  .topbar{padding:0 14px;height:60px}.page{padding:20px 14px}
+  .mobile-menu{display:inline-block}
+  .stats{gap:9px}.card{padding:14px}
+  .stat-number{font-size:23px}
+  .schedule-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .summary-strip{grid-template-columns:1fr}
+}
+
+/* ===== Facebook-style green theme ===== */
+:root{
+  --green:#008584;--green-dark:#006c6b;--green-light:#d5e9eb;
+  --bg:#f0f2f5;--white:#fff;--text:#1c1e21;--muted:#65676b;
+  --border:#dadde1;--shadow:0 1px 2px rgba(0,0,0,.12);
+}
+body{background:var(--bg);color:var(--text);font-family:Helvetica,Arial,"Segoe UI",sans-serif;font-size:14px}
+
+/* Left sidebar */
+.sidebar{width:260px;background:#fff;border-right:none;box-shadow:0 1px 2px rgba(0,0,0,.12);padding:12px 8px}
+.main{margin-left:260px;width:calc(100% - 260px)}
+.brand{padding:8px 10px 16px}
+.brand-icon{border-radius:50%;width:40px;height:40px}
+.brand strong{font-size:20px;color:var(--green-dark)}
+.nav-label{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0;padding:14px 10px 6px}
+.nav-btn{border-radius:8px;padding:8px 10px;font-size:14px;color:var(--text);font-weight:500}
+.nav-btn:hover{background:#f0f2f5;color:var(--text)}
+.nav-btn.active{background:var(--green-light);color:var(--green-dark);font-weight:600}
+.nav-icon{font-size:16px}
+.nav-count{background:#e41e3f}
+.sidebar-bottom{border-top:1px solid var(--border)}
+
+/* Top bar */
+.topbar{height:56px;background:#fff;border-bottom:none;box-shadow:0 1px 2px rgba(0,0,0,.12);padding:0 16px}
+.search{width:min(320px,40vw);background:#f0f2f5;border-radius:20px;padding:9px 14px;font-size:14px}
+.search:focus{border-color:#9fd4d3;background:#fff}
+.icon-btn{background:#e4e6eb;border-radius:50%}
+.icon-btn:hover{background:#d8dade}
+.avatar{background:var(--green-light);color:var(--green-dark)}
+
+/* Page */
+.page{padding:20px 24px;max-width:1400px}
+h1{font-size:24px;font-weight:700;letter-spacing:-.3px}
+.subtitle{color:var(--muted);font-size:14px}
+
+/* Cards */
+.card{background:#fff;border:none;border-radius:8px;box-shadow:var(--shadow);padding:16px}
+.stat-icon{background:var(--green-light);border-radius:50%;width:36px;height:36px}
+.stat-number{font-weight:700}
+.stat-label,.stat-note{color:var(--muted)}
+.section-head h2,h2{font-size:17px;font-weight:700}
+
+/* Buttons */
+.btn{border-radius:6px;padding:9px 14px;font-size:14px;font-weight:600}
+.btn:hover{filter:none;background-color:#d8f0f0}
+.primary{background:var(--green);color:#fff}
+.primary:hover{background:var(--green-dark)}
+.secondary{background:var(--green-light);color:var(--green-dark)}
+.outline{background:#e4e6eb;border:none;color:var(--text)}
+.outline:hover{background:#d8dade}
+.danger{background:#fdecee;color:#c62828}
+
+/* Tables, fields and tabs */
+th{color:var(--muted);font-size:12px;font-weight:600;border-bottom:1px solid var(--border)}
+td{border-bottom:1px solid #eef0f2;font-size:14px}
+.field{border:1px solid var(--border);border-radius:6px;padding:9px 10px;font-size:14px;background:#fff}
+.field:focus{border-color:var(--green)}
+.tab{border:none;background:#e4e6eb;border-radius:20px;padding:8px 14px;color:var(--text)}
+.tab.active{background:var(--green);color:#fff}
+.status,.chip{border-radius:6px}
+
+/* Modals and toast */
+.modal{border-radius:8px;box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.modal-close{background:#e4e6eb}
+.toast{background:var(--green-dark);border-radius:8px}
+.notif-panel{border-radius:8px;box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.room-stage{background:#e9f1f1}
+.day,.month-cell{border-color:#eef0f2}
+
+@media(max-width:950px){
+  .sidebar{width:220px}.main{margin-left:220px;width:calc(100% - 220px)}
+}
+@media(max-width:650px){
+  .sidebar{display:none}.main{margin:0;width:100%}
+  .topbar{height:52px;padding:0 12px}
+  .page{padding:14px 12px}
+}
+
+/* ===== CCS LAMS update ===== */
+.brand{background:#12212d;border-radius:10px;padding:14px 12px;margin:0 4px 10px;gap:12px}
+.brand-icon{width:46px;height:46px;border-radius:12px;background:#2b9695;color:#fff;font-size:17px;font-weight:800;letter-spacing:.5px}
+.brand strong{color:#e9f0f4;font-size:18px;letter-spacing:1.5px}
+.brand small{color:#8ea2af;font-size:9px;letter-spacing:.9px;margin-top:4px}
+
+/* Dashboard */
+.dash-hero{background:#e9f1f1;border-radius:8px;padding:18px 22px;margin-bottom:16px}
+.dash-over{font-size:9px;font-weight:800;letter-spacing:1.4px;color:#2b9695;margin-bottom:6px}
+.dash-hero h1{margin:0 0 4px;font-size:22px}
+.stats5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.dstat{display:flex;align-items:center;gap:12px;padding:14px}
+.dicon{width:30px;height:30px;border-radius:0;background:none;display:grid;place-items:center;font-size:15px;font-weight:800;flex-shrink:0}
+.dicon svg{display:block;width:28px;height:28px}
+.dicon.blue{background:none;color:#3f7fd0}.dicon.green{background:none;color:#008584}
+.dicon.red{background:none;color:#d34d4d}.dicon.orange{background:none;color:#d98a1f}
+.dval{font-size:22px;font-weight:800;line-height:1.1;margin-top:3px}
+.link-btn{border:0;background:none;color:#2b9695;font-weight:700;font-size:13px;padding:4px}
+.link-btn:hover{text-decoration:underline}
+.lab-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.lab-tile{text-align:left;background:#fff;border:1px solid var(--border);border-top:3px solid #1a9a98;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:14px;min-height:128px}
+.lab-tile:hover{background:#f7fbfb}
+.lab-tile b{font-size:13px}
+.lab-num{font-size:28px;font-weight:800;margin-top:auto;line-height:1}
+.lab-num small{font-size:11px;font-weight:400;color:var(--muted);margin-left:4px}
+.lab-rooms{font-size:11px;color:var(--muted)}
+
+/* RFID registration */
+.code-row{display:flex;gap:8px}
+.code-row .field{flex:1}
+.scan-box{position:relative;background:#0e1a1a;border-radius:10px;overflow:hidden;margin-bottom:12px}
+.scan-box video{display:block;width:100%;max-height:230px;object-fit:cover}
+.scan-msg{position:absolute;left:0;right:0;bottom:0;background:#000a;color:#fff;font-size:11px;padding:7px 10px;line-height:1.4}
+.scan-box::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:2px;background:#57acaa;box-shadow:0 0 10px #57acaa;animation:scanMove 1.8s ease-in-out infinite alternate}
+@keyframes scanMove{from{top:22%}to{top:72%}}
+.check{display:flex;align-items:center;gap:7px;font-size:12px;color:#536161;margin:0 0 8px}
+.modal.wide{width:min(640px,100%)}
+
+/* Room layout: RFID labels, split squares, saved rooms */
+.rfid-tag{font-style:normal;font-family:ui-monospace,Consolas,monospace;font-size:8px;line-height:1.2;margin-top:2px;background:#ffffffcc;border-radius:3px;padding:1px 3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#006c6b;font-weight:700}
+@keyframes flashPulse{0%,100%{box-shadow:0 0 0 0 #f5a62300}50%{box-shadow:0 0 0 7px #f5a623d9}}
+.room-obj.flash,.table-item.flash{animation:flashPulse .7s ease 3;z-index:4}
+.tp-row{flex-wrap:wrap}
+.tp-row .field{font-size:11px;padding:5px 6px;max-width:170px}
+.rfid-panel{margin-top:18px;border-top:1px solid var(--border);padding-top:4px}
+.rfid-panel .section-head{margin:14px 0 10px}
+.rf-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #eef0f2;font-size:13px;flex-wrap:wrap}
+.rf-row:last-child{border:0}
+.rf-code{font-family:ui-monospace,Consolas,monospace;font-weight:700;color:#006c6b;min-width:92px}
+.rf-meta{flex:1;min-width:140px}
+.rf-meta small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.room-counts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.lab-count{display:inline-flex;align-items:center;gap:8px;background:#f0f2f5;border-radius:8px;padding:8px 12px;font-size:13px}
+.lab-count b{background:var(--green);color:#fff;border-radius:6px;min-width:22px;text-align:center;padding:1px 6px;font-size:12px}
+.lab-count.zero b{background:#c4c9cf}
+
+@media(max-width:950px){.stats5{grid-template-columns:repeat(2,minmax(0,1fr))}.lab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.lab-grid{grid-template-columns:1fr}.dash-hero h1{font-size:18px}}
+/* LAMS wolf logo */
+.brand{flex-direction:column;align-items:center;text-align:center;gap:6px;padding:12px 10px 12px}
+.brand-logo{width:150px;height:auto;display:block}
+.brand small{margin:0;color:#8ea2af;font-size:9px;letter-spacing:1px}
+/* Cartoon wolf logo needs a light plate */
+.brand{background:#eaf4f4;border:1px solid #d6e6e6;padding:10px 8px 10px}
+.brand-logo{width:210px;max-width:100%}
+.brand small{color:#516666;font-weight:700}
+/* Square LAMS logo */
+.brand{background:none;border:0;padding:6px 8px 14px;margin:0}
+.brand-logo{width:132px;height:132px;border-radius:30px;box-shadow:0 3px 10px rgba(0,108,107,.28)}
+
+/* Room zoom (--z is set from JS) */
+.room-obj span{font-size:calc(18px*var(--z,1))}
+.room-obj b{font-size:calc(9px*var(--z,1));margin-top:2px}
+.rfid-tag{font-size:calc(8px*var(--z,1));padding:1px 3px}
+.zoom-ctl{display:inline-flex;align-items:center;gap:6px}
+.zoom-ctl .btn{padding:6px 11px;min-width:34px}
+.zoom-ctl span{font-size:12px;color:var(--muted);min-width:42px;text-align:center}
+.tag-input{min-width:150px;width:150px}
+.tag-scan{padding:8px 10px;white-space:nowrap}
+.nfc-status{background:#d5e9eb;color:#006c6b;border-radius:10px;padding:16px;text-align:center;font-size:14px;font-weight:700;margin-bottom:12px;line-height:1.5}
+.nfc-status small{display:block;font-weight:400;color:#2c3a3a;margin-top:4px;font-size:12px}
+.rfid-legend{position:absolute;z-index:6;background:#ffffffee;border:1px solid #84bfc0;border-radius:6px;padding:3px 7px;font-size:max(9px,calc(9px*var(--z,1)));line-height:1.4;color:#2c3a3a;pointer-events:none;white-space:nowrap;box-shadow:0 2px 6px #00404022}
+.rfid-legend b{color:#006c6b}
+.asset-item{cursor:grab}
+.tp-row select.status-sel{min-width:150px}
+
+/* ===== LAMS teal + blue palette refresh ===== */
+:root{
+  --green:#0f8f95;
+  --green-dark:#08727d;
+  --green-light:#d9f0f2;
+  --bg:#f2f7fb;
+  --white:#ffffff;
+  --text:#172b3a;
+  --muted:#64798a;
+  --border:#d8e5ee;
+  --red:#df5757;
+  --orange:#e9a33b;
+  --blue:#397fbd;
+  --shadow:0 4px 16px rgba(20,73,105,.08);
+}
+body{background:var(--bg);color:var(--text)}
+button,.btn,.primary-btn{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+button.primary,.btn-primary,.save-btn,.btn.save{background:#0f8f95!important;border-color:#0f8f95!important;color:#fff!important}
+button.primary:hover,.btn-primary:hover,.save-btn:hover,.btn.save:hover{background:#08727d!important}
+a,.link-btn{color:#2878b8}
+input:focus,select:focus,textarea:focus{outline-color:#238fae;border-color:#238fae}
+.card,.panel,.modal,.asset-item,.lab-tile{border-color:var(--border)}
+.brand{background:#e7f2f8;border-color:#d2e4ef}
+.brand strong{color:#173b56}
+.brand small{color:#55758c}
+.dash-hero{background:linear-gradient(120deg,#e1f2f3,#e8f1fb)}
+.dash-over{color:#087f89}
+.lab-tile{border-top-color:#258bb5}
+.lab-tile:hover{background:#f0f8fc}
+.dicon.blue{background:none;color:#2878b8}
+.dicon.green{background:none;color:#087f89}
+.rfid-tag,.rf-code,.rfid-legend b{color:#08727d}
+.scan-box{background:#102c40}
+.scan-box::after{background:#42c5c5;box-shadow:0 0 10px #42c5c5}
+.nfc-status{background:#d9f0f2;color:#08727d}
+.lab-count{background:#e8f1f8}
+.lab-count b{background:#287eaa}
+.room-obj,.table-item{border-color:#77a9c8}
+
+
+/* Recent activity timeline and administrator profile */
+.activity-timeline{display:flex;flex-direction:column}
+.activity-entry{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 4px;border-bottom:1px solid var(--border)}
+.activity-entry:last-child{border-bottom:0}
+.activity-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--green-light);color:var(--green-dark);font-size:13px}
+.activity-entry b{font-size:13px;color:var(--text)}
+.activity-entry small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+#sidebarAdminAvatar,#topAdminAvatar,#adminProfileAvatar{background:var(--green-light);color:var(--green-dark)}
+#adminProfileForm .form-group{margin-bottom:15px}
+
+
+/* Smaller sidebar logo */
+.brand{padding:8px 10px;margin:0 4px 4px;background:none!important;border:0!important;box-shadow:none!important}
+.brand-logo{width:72px;height:72px;border-radius:18px;box-shadow:0 2px 6px rgba(0,108,107,.25)}
+/* QR-sticker icon (follows the text colour) */
+.ic-tag{display:inline-block;width:1.2em;height:1.2em;vertical-align:-.22em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M6 6h5v5H6zM13 6h5v5h-5zM6 13h5v5H6zM13 13h2.5v2.5H13zM15.5 15.5H18V18h-2.5z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M6 6h5v5H6zM13 6h5v5h-5zM6 13h5v5H6zM13 13h2.5v2.5H13zM15.5 15.5H18V18h-2.5z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat}
+.nfc-status .ic-tag{width:1.4em;height:1.4em}
+/* Green notification bell */
+.ic-bell{display:inline-block;width:19px;height:19px;vertical-align:-4px;background:var(--green);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a1.6 1.6 0 0 0-1.6 1.6v.7C7.7 5 6 7.4 6 10.3v3.6L4 16.6V18h16v-1.4l-2-2.7v-3.6c0-2.9-1.7-5.3-4.4-6v-.7A1.6 1.6 0 0 0 12 2zm-2.2 17a2.2 2.2 0 0 0 4.4 0z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a1.6 1.6 0 0 0-1.6 1.6v.7C7.7 5 6 7.4 6 10.3v3.6L4 16.6V18h16v-1.4l-2-2.7v-3.6c0-2.9-1.7-5.3-4.4-6v-.7A1.6 1.6 0 0 0 12 2zm-2.2 17a2.2 2.2 0 0 0 4.4 0z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat}
+/* Formal sidebar icons (one consistent style, same green as the bell) */
+.ni{display:inline-block;width:20px;height:20px;vertical-align:-4px;background:var(--green);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.ni-dashboard{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h8v10H3zM13 3h8v6h-8zM13 11h8v10h-8zM3 15h8v6H3z' fill='black'/%3E%3C/svg%3E")}
+.ni-inventory{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M3 3h18v5H3zM4 10h16v11H4zM9 13h6v2H9z' fill='black'/%3E%3C/svg%3E")}
+.ni-rfid{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='2.4' fill='black'/%3E%3Cpath d='M8.4 8.4a5.1 5.1 0 0 0 0 7.2M15.6 8.4a5.1 5.1 0 0 1 0 7.2M5.4 5.4a9.3 9.3 0 0 0 0 13.2M18.6 5.4a9.3 9.3 0 0 1 0 13.2' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ni-rooms{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='3' width='18' height='18' rx='1.5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 3v8M3 14h11M14 14v7' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ni-bookings{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4.5' width='14' height='17' rx='2' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9 2.5h6v4H9z' fill='black'/%3E%3Cpath d='M8.6 13.5l2.4 2.4 4.4-4.8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ni-schedule{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='5' width='18' height='16' rx='2' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.5 13.5h3v3h-3z' fill='black'/%3E%3C/svg%3E")}
+.ni-book{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12 7.5v9M7.5 12h9' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ni-notifications{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a1.6 1.6 0 0 0-1.6 1.6v.7C7.7 5 6 7.4 6 10.3v3.6L4 16.6V18h16v-1.4l-2-2.7v-3.6c0-2.9-1.7-5.3-4.4-6v-.7A1.6 1.6 0 0 0 12 2zm-2.2 17a2.2 2.2 0 0 0 4.4 0z' fill='black'/%3E%3C/svg%3E")}
+.ni-reports{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20V11h4v9zM10 20V4h4v16zM16 20v-6h4v6z' fill='black'/%3E%3C/svg%3E")}
+/* Tap sticker buttons: dark green */
+#nfcBtn,#tsNfcBtn{background:#0b5c36;color:#fff;border:0}
+#nfcBtn:hover,#tsNfcBtn:hover{background:#094a2c;color:#fff}
+#nfcBtn .ic-tag,#tsNfcBtn .ic-tag{background-color:#fff}
+/* RFID summary cards: formal dark-green icons */
+.rstat{display:flex;align-items:center;gap:14px}
+.ricon{display:grid;place-items:center;width:30px;height:30px;color:#0b5c36;flex-shrink:0}
+.ricon svg{display:block}
+/* Sidebar icons: dark green */
+.ni{background:#0b5c36}
+/* Line-drawn gadget icons */
+.gi{width:1.25em;height:1.25em;display:inline-block;vertical-align:-.2em;color:#0b5c36}
+/* Bookings shown on the schedule + conflict note */
+.cal-booking{position:absolute;left:4px;right:4px;border-radius:8px;padding:5px 7px;font-size:11px;border:1.5px dashed #0b5c36;background:repeating-linear-gradient(135deg,#fff7e3,#fff7e3 6px,#ffefc9 6px,#ffefc9 12px);color:#5a4300;overflow:hidden;line-height:1.35;z-index:1}
+.cal-booking b{font-size:12px;display:block;color:#0b5c36}
+.cal-booking small{display:block}
+.month-item.booked{background:#fff3d6;border:1px dashed #0b5c36;color:#5a4300;cursor:default}
+.class-warn{margin-top:4px;font-size:10px;color:#b3261e;font-weight:700}
+.error-box{background:#fdeceb;color:#b3261e;padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.6;margin-bottom:14px;border:1px solid #f3c7c3}
+.error-box b{color:#8f1d17}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <svg class="brand-logo" viewBox="0 0 200 200" role="img" aria-label="LAMS logo">
+  <rect width="200" height="200" rx="38" fill="#006c6b"/>
+  <rect x="6" y="6" width="188" height="188" rx="33" fill="none" stroke="#2fa5a3" stroke-width="2"/>
+  <!-- wolf head -->
+  <path d="M100 136 L80 123 L64 128 L58 111 L42 105 L40 66 L52 20 L82 50 Q100 45 118 50 L148 20 L160 66 L158 105 L142 111 L136 128 L120 123 Z" fill="#fff"/>
+  <path d="M54 33 L57 62 L75 51 Z M146 33 L143 62 L125 51 Z" fill="#b9d8d7"/>
+  <path d="M42 105 L74 90 L73 119 L58 111 Z M158 105 L126 90 L127 119 L142 111 Z" fill="#d5e9eb"/>
+  <path d="M100 49 L93 70 L107 70 Z" fill="#d5e9eb"/>
+  <path d="M86 98 L114 98 L100 133 Z" fill="#d5e9eb"/>
+  <path d="M69 77 L89 83 L85 92 L67 85 Z M131 77 L111 83 L115 92 L133 85 Z" fill="#006c6b"/>
+  <path d="M92 104 L108 104 L100 116 Z" fill="#006c6b"/>
+  <!-- wordmark -->
+  <text x="100" y="177" text-anchor="middle" textLength="140" lengthAdjust="spacingAndGlyphs" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="40" fill="#fff">LAMS</text>
+</svg>
+  </div>
+  <div class="nav-label">MAIN MENU</div>
+  <button class="nav-btn active" data-page="dashboard"><span class="nav-icon"><i class="ni ni-dashboard"></i></span>Dashboard</button>
+  <button class="nav-btn" data-page="inventory"><span class="nav-icon"><i class="ni ni-inventory"></i></span>Inventory</button>
+  <button class="nav-btn" data-page="rfid"><span class="nav-icon"><i class="ni ni-rfid"></i></span>RFID Registration</button>
+  <button class="nav-btn" data-page="rooms"><span class="nav-icon"><i class="ni ni-rooms"></i></span>Room Layout</button>
+  <div class="nav-label">MANAGEMENT</div>
+  <button class="nav-btn" data-page="bookings"><span class="nav-icon"><i class="ni ni-bookings"></i></span>Booking Approvals</button>
+  <button class="nav-btn" data-page="schedule"><span class="nav-icon"><i class="ni ni-schedule"></i></span>Schedules</button>
+  <div class="nav-label">USER PORTAL</div>
+  <button class="nav-btn" data-page="book"><span class="nav-icon"><i class="ni ni-book"></i></span>Book a Room</button>
+  <div class="nav-label">SYSTEM</div>
+  <button class="nav-btn" data-page="notifications"><span class="nav-icon"><i class="ni ni-notifications"></i></span>Notifications<span class="nav-count hide" id="navAlertCount">0</span></button>
+  <button class="nav-btn" data-page="reports"><span class="nav-icon"><i class="ni ni-reports"></i></span>Reports & Export</button>
+  <div class="sidebar-bottom">
+    <button class="profile" type="button" onclick="openAdminProfile()" style="width:100%;border:0;background:transparent;text-align:left;cursor:pointer">
+      <div class="avatar" id="sidebarAdminAvatar">A</div>
+      <div><b id="sidebarAdminName" style="font-size:12px">Administrator</b><small>System Admin · View profile</small></div>
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="icon-btn mobile-menu" onclick="toast('Use the navigation menu on desktop for this preview.')">☰</button>
+    <input class="search" id="globalSearch" placeholder="⌕  Search assets, RFID codes, rooms..." oninput="globalSearch()">
+  </div>
+  <div class="top-actions">
+    <div class="bell-wrap" id="bellWrap">
+      <button class="icon-btn" id="bellBtn" title="Notifications" style="color:#006c6b"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#006c6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+      <span class="bell-badge" id="bellBadge">0</span>
+      <div class="notif-panel" id="notifPanel">
+        <div class="notif-head">
+          <h2>Lost Equipment Alerts</h2>
+        </div>
+        <div class="notif-list" id="alertList"></div>
+        <div class="notif-foot">
+          <button class="btn secondary" style="width:100%" onclick="openAllNotifications()">View lost-equipment alerts →</button>
+        </div>
+      </div>
+    </div>
+    <button class="avatar" id="topAdminAvatar" type="button" title="Administrator profile" onclick="openAdminProfile()" style="border:0;cursor:pointer">A</button>
+  </div>
+</header>
+
+<div class="page">
+
+<!-- DASHBOARD -->
+<section class="page-section active" id="dashboard">
+  <div class="dash-hero">
+    <div class="dash-over">OVERVIEW</div>
+    <h1>CCS Laboratory Asset Management System</h1>
+    <div class="subtitle">Live status across laboratories and rooms</div>
+  </div>
+  <div class="stats5">
+    <div class="card dstat"><span class="dicon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><div class="stat-label">Total assets</div><div class="dval" id="dTotal">0</div></div></div>
+    <div class="card dstat"><span class="dicon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></span><div><div class="stat-label">In service</div><div class="dval" id="dService">0</div></div></div>
+    <div class="card dstat"><span class="dicon red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></span><div><div class="stat-label">Condemned</div><div class="dval" id="dCondemned">0</div></div></div>
+    <div class="card dstat"><span class="dicon orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><div><div class="stat-label">Under maintenance</div><div class="dval" id="dMaint">0</div></div></div>
+    <div class="card dstat"><span class="dicon red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.5M12 17.3h.01"/></svg></span><div><div class="stat-label">Active alerts</div><div class="dval" id="dAlerts">0</div></div></div>
+  </div>
+  <div class="card" style="margin-top:17px">
+    <div class="section-head"><h2>Laboratories</h2><button class="link-btn" onclick="showPage('rooms')">Manage rooms →</button></div>
+    <div class="lab-grid" id="labGrid"></div>
+  </div>
+  <div class="card" style="margin-top:17px">
+    <div class="section-head"><div><h2>Asset Condition Overview</h2><p>In service vs condemned units</p></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px"><span>In service</span><b id="servicePercent">0%</b></div>
+    <div class="progress"><span id="serviceBar" style="width:0%"></span></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:18px"><span>Condemned</span><b id="condemnedPercent">0%</b></div>
+    <div class="progress"><span id="condemnedBar" style="width:0%;background:#df5757"></span></div>
+  </div>
+</section>
+
+<!-- INVENTORY -->
+<section class="page-section" id="inventory">
+  <div class="page-heading">
+    <div><h1>Inventory Management</h1><div class="subtitle">Manage equipment, quantities, locations, and conditions.</div></div>
+    <button class="btn primary" onclick="openModal('assetModal')">＋ Add Asset</button>
+  </div>
+  <div class="summary-strip">
+    <div class="card"><div class="stat-label">In Service</div><div class="stat-number" id="sumService">0</div><div class="stat-note">units working</div></div>
+    <div class="card"><div class="stat-label">Under Maintenance</div><div class="stat-number" id="sumMaint" style="color:#b47a19">0</div><div class="stat-note" style="color:#b47a19">units being repaired</div></div>
+    <div class="card"><div class="stat-label">Condemned</div><div class="stat-number" id="sumCondemned" style="color:var(--red)">0</div><div class="stat-note" style="color:var(--red)">units unusable</div></div>
+  </div>
+  <div class="toolbar">
+    <input class="field" id="assetSearch" placeholder="Search asset, RFID code, or room..." oninput="renderAssets()">
+    <select class="field" id="roomFilter" data-labs="all" onchange="renderAssets()"></select>
+    <select class="field" id="statusFilter" onchange="renderAssets()"><option value="">All Statuses</option><option>In Service</option><option>Under Maintenance</option><option>Condemned</option><option>Lost</option></select>
+    <button class="btn secondary" onclick="bulkChange(1)">＋ Bulk Add</button>
+    <button class="btn outline" onclick="bulkChange(-1)">− Bulk Subtract</button>
+  </div>
+  <div class="card">
+    <div class="section-head"><div><h2>Asset Records</h2><p>One row per asset and room. Condition counts show how many are in each state.</p></div><span class="status" id="assetCount">0 assets</span></div>
+    <div class="table-wrap"><table><thead><tr><th>ASSET</th><th>ROOM</th><th>IN SERVICE</th><th>MAINTENANCE</th><th>CONDEMNED</th><th>LOST</th><th>RFID TAG(S)</th><th>ACTION</th></tr></thead><tbody id="assetRows"></tbody></table></div>
+  </div>
+</section>
+
+<!-- RFID -->
+<section class="page-section" id="rfid">
+  <div class="page-heading"><div><h1>RFID Registration</h1><div class="subtitle">Track which individual equipment units have a passive RFID sticker paired.</div></div></div>
+  <div class="stats">
+    <div class="card rstat"><span class="ricon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></svg></span><div><div class="stat-label">Registered Tags</div><div class="stat-number" id="tagStat">0</div></div></div>
+    <div class="card rstat"><span class="ricon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 15h6"/></svg></span><div><div class="stat-label">Unassigned Records</div><div class="stat-number" id="unassignedStat">0</div></div></div>
+    <div class="card rstat"><span class="ricon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span><div><div class="stat-label">Duplicate Tags</div><div class="stat-number" id="duplicateStat">0</div></div></div>
+    <div class="card rstat"><span class="ricon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><div><div class="stat-label">Total Units</div><div class="stat-number" id="rfidAssetStat">0</div></div></div>
+  </div>
+  <div class="card" style="margin-bottom:17px">
+    <div class="section-head"><div><h2>Equipment RFID Status</h2><p>Each row represents one equipment unit. Check the Action column to see whether its RFID tag is paired.</p></div><button type="button" class="btn secondary" onclick="openBatchRfidModal()">Register &amp; Pair</button></div>
+    <div class="table-wrap"><table><thead><tr><th>ASSET / UNIT</th><th>ROOM</th><th>CONDITION</th><th>RFID CODE</th><th>ACTION</th></tr></thead><tbody id="untaggedRows"></tbody></table></div>
+  </div>
+  <div class="card">
+    <div class="section-head"><div><h2>RFID Tag Records</h2><p>Unique identifiers assigned to equipment</p></div><button class="btn outline" onclick="exportCSV()">Export CSV</button></div>
+    <div class="table-wrap"><table><thead><tr><th>RFID CODE</th><th>ASSET</th><th>ROOM</th><th>CONDITION</th><th>UNITS</th></tr></thead><tbody id="rfidRows"></tbody></table></div>
+  </div>
+</section>
+
+<!-- ROOM LAYOUT -->
+<section class="page-section" id="rooms">
+  <div class="page-heading">
+    <div><h1>Room Layout</h1><div class="subtitle">Pick furniture and equipment, then design the room.</div></div>
+  </div>
+  <div class="toolbar">
+    <select class="field" id="layoutRoom" data-labs="" onchange="changeRoom()" style="flex:0 0 auto;min-width:200px"></select>
+    <span class="size-ctl">Size
+      <input class="field" id="roomW" type="number" min="4" max="30" step="1" style="width:70px"> ×
+      <input class="field" id="roomH" type="number" min="4" max="20" step="1" style="width:70px"> tiles
+      <button class="btn outline" onclick="applyRoomSize()">Apply size</button>
+    </span>
+    <button class="btn primary" onclick="saveRoomDesign()">Save Layout</button>
+    <button class="btn outline" onclick="openModal('labModal')">＋ Add Laboratory</button>
+    <button class="btn outline" onclick="clearRoom()">Clear Room</button>
+    <button class="btn outline" onclick="resetRoom()">Reset to Sample</button>
+  </div>
+  <div class="room-builder">
+    <div class="card">
+      <div class="palette-title">FURNITURE & EQUIPMENT</div>
+      <div id="palette"></div>
+      <button class="btn secondary palette-add" onclick="openItemModal()">＋ Add New Item</button>
+
+      <div class="palette-hint">
+        Click an item, then click the room to place it. You can also drag it onto the room.<br><br>
+        <kbd>R</kbd> rotate &nbsp; <kbd>Del</kbd> remove &nbsp; <kbd>Esc</kbd> cancel
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-head">
+        <div><h2 id="roomTitle">Embedded Laboratory</h2><p>Drag objects to move them. Objects can't overlap.</p></div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <label class="check" style="margin:0"><input type="checkbox" id="showRfid" checked onchange="renderRoom()"> Show RFID labels</label>
+          <span class="zoom-ctl"><button class="btn outline" onclick="zoomRoom(-1)" title="Zoom out">−</button><span id="zoomLbl">100%</span><button class="btn outline" onclick="zoomRoom(1)" title="Zoom in">＋</button></span>
+          <button class="btn secondary" id="rotateBtn" onclick="rotateCurrent()">⟳ Rotate</button>
+        </div>
+      </div>
+      <div class="room-stage">
+        <div class="room-floor" id="roomFloor"></div>
+      </div>
+      <div class="selection-info" id="selInfo"></div>
+      <div class="rfid-panel">
+        <div class="section-head">
+          <div><h2>RFID in this room</h2><p>Select an item and link a tag to it. Search a code to find exactly where that item sits.</p></div>
+          <button class="btn outline" onclick="autoLinkTags()">Auto-link tags</button>
+        </div>
+        <input class="field" id="rfidFind" placeholder="Find a lost item: type an RFID code or item name" style="width:100%;margin-bottom:8px" oninput="renderRfidPanel()" onkeydown="if(event.key==='Enter'){event.preventDefault();locateFirst();}">
+        <div class="form-hint" id="rfidFindMsg" style="margin:0 0 8px"></div>
+        <div id="rfidPanelList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:17px">
+    <div class="section-head"><div><h2>Saved Rooms</h2><p>Every room you design and save is counted here, grouped by laboratory.</p></div></div>
+    <div class="room-counts" id="roomCounts"></div>
+    <div class="table-wrap"><table><thead><tr><th>ROOM</th><th>LABORATORY</th><th>SIZE</th><th>ITEMS</th><th>RFID LINKED</th><th>SAVED</th><th>ACTION</th></tr></thead><tbody id="savedRoomRows"></tbody></table></div>
+  </div>
+</section>
+
+<!-- BOOKING APPROVALS (ADMIN) -->
+<section class="page-section" id="bookings">
+  <div class="page-heading"><div><h1>Booking Approvals</h1><div class="subtitle">Confirm or reject room requests submitted by users.</div></div></div>
+  <div class="card">
+    <div class="section-head"><div><h2>Booking Requests</h2><p>Users submit requests from the "Book a Room" page. Admins only confirm or reject them here.</p></div></div>
+    <div class="error-box hidden" id="approvalError"></div>
+    <div class="table-wrap"><table><thead><tr><th>REQUESTER</th><th>ROOM</th><th>DATE</th><th>TIME</th><th>PURPOSE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="bookingRows"></tbody></table></div>
+  </div>
+</section>
+
+<!-- BOOK A ROOM (USER PORTAL) -->
+<section class="page-section" id="book">
+  <div class="page-heading"><div><h1>Book a Room</h1><div class="subtitle">Submit a request. An administrator will confirm it.</div></div></div>
+  <div class="card" style="max-width:640px">
+    <div class="success-box hidden" id="bookSuccess"></div>
+    <div class="error-box hidden" id="bookError"></div>
+    <form id="bookForm">
+      <div class="form-group"><label>Your Name</label><input class="field" name="name" required placeholder="Full name"></div>
+      <div class="form-group"><label>Room</label><select class="field" name="room" data-labs=""></select></div>
+      <div class="form-group"><label>Date</label><input class="field" name="date" type="date" required></div>
+      <div class="form-grid">
+        <div class="form-group"><label>Start Time</label><input class="field" name="start" type="time" required></div>
+        <div class="form-group"><label>End Time</label><input class="field" name="end" type="time" required></div>
+      </div>
+      <div class="form-group"><label>Purpose</label><textarea name="purpose" placeholder="e.g. Programming class, thesis testing"></textarea></div>
+      <div class="form-actions"><button class="btn primary">Submit Request</button></div>
+    </form>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="page-section" id="schedule">
+  <div class="page-heading">
+    <div><h1>Laboratory Schedules</h1><div class="subtitle">Drag down a time range to add a class. Drag a class to move it to another day or time. Click a class to edit it. Approved bookings appear as dashed blocks, and bookings cannot overlap a class.</div></div>
+    <button class="btn primary" onclick="openSchedModal()">＋ Add Schedule</button>
+  </div>
+  <div class="toolbar">
+    <div class="tabs" style="margin:0">
+      <button class="tab" data-sv="day" onclick="setSchedView('day')">Day</button>
+      <button class="tab" data-sv="week" onclick="setSchedView('week')">Week</button>
+      <button class="tab" data-sv="month" onclick="setSchedView('month')">Month</button>
+    </div>
+    <button class="btn outline" onclick="schedNav(-1)">‹</button>
+    <button class="btn outline" onclick="schedToday()">Today</button>
+    <button class="btn outline" onclick="schedNav(1)">›</button>
+    <strong id="schedRange" style="font-size:13px"></strong>
+    <select class="field" id="schedRoom" onchange="renderSchedule()" style="margin-left:auto;flex:0 0 auto;min-width:160px"></select>
+  </div>
+  <div class="card" style="padding:0;overflow:auto"><div id="schedView"></div></div>
+</section>
+
+<!-- LOST EQUIPMENT MONITORING -->
+<section class="page-section" id="notifications">
+  <div class="page-heading">
+    <div><h1>Lost Equipment Alerts</h1><div class="subtitle">Alerts are shown only when equipment is marked as lost from its assigned laboratory.</div></div>
+    <button class="btn outline" onclick="resolveAll()">Clear resolved alerts</button>
+  </div>
+  <div class="tabs">
+    <button class="tab" data-f="all" onclick="setAlertFilter('all')">All lost equipment</button>
+    <button class="tab" data-f="open" onclick="setAlertFilter('open')">Unresolved</button>
+    <button class="tab" data-f="resolved" onclick="setAlertFilter('resolved')">Resolved</button>
+  </div>
+  <div class="card"><div id="allAlerts"></div></div>
+  
+</section>
+
+<!-- ADMINISTRATOR PROFILE -->
+<section class="page-section" id="adminProfile">
+  <div class="page-heading">
+    <div><h1>Administrator Profile</h1><div class="subtitle">Shared administrator account settings. No personal details are stored.</div></div>
+  </div>
+  <div class="card" style="max-width:760px">
+    <form id="adminProfileForm">
+      <h2 style="margin:0 0 14px">Account Information</h2>
+      <div class="form-grid">
+        <div class="form-group"><label for="adminUsername">Username</label><input class="field" id="adminUsername" required maxlength="60" autocomplete="username" placeholder="Username"></div>
+        <div class="form-group"><label for="adminStatus">Account Status</label><select class="field" id="adminStatus"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
+        <div class="form-group"><label for="adminPassword">Password</label><input class="field" id="adminPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Leave blank to keep current password"><small class="form-hint">Enter a new password only if you want to change it (minimum 8 characters).</small></div>
+        <div class="form-group"><label for="adminConfirmPassword">Confirm Password</label><input class="field" id="adminConfirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Re-enter new password"></div>
+      </div>
+      <p class="form-hint">Leave both password fields blank to keep the current password.</p>
+      <div class="form-actions"><button class="btn primary" type="submit">Save Profile</button></div>
+    </form>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section class="page-section" id="reports">
+  <div class="page-heading"><div><h1>Reports & Export</h1><div class="subtitle">Download inventory records for reporting and backup.</div></div></div>
+  <div class="grid-2">
+    <div class="card"><h2>Inventory Export</h2><p class="subtitle">Export asset names, RFID codes, rooms, quantities, and conditions.</p><button class="btn primary" style="margin-top:12px" onclick="exportCSV()">↓ Export Inventory CSV</button></div>
+    <div class="card"><h2>Inventory Summary</h2><p class="subtitle">Current totals</p>
+      <div class="stat-number" id="reportTotal">0</div><div class="stat-label">Total registered units</div>
+      <div style="margin-top:12px;font-size:12px"><span class="chip ok" id="reportService">0</span> in service &nbsp; <span class="chip warn" id="reportMaint">0</span> maintenance &nbsp; <span class="chip bad" id="reportCondemned">0</span> condemned</div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<!-- ADD ASSET -->
+<div class="modal-backdrop" id="assetModal">
+<div class="modal">
+  <div class="modal-head"><h2>Add Inventory Asset</h2><button class="modal-close" onclick="closeModal('assetModal')">×</button></div>
+  <form id="assetForm">
+    <div class="form-grid">
+      <div class="form-group"><label>Asset Name</label><input class="field" name="name" required placeholder="e.g. Mouse" list="assetNameList"><datalist id="assetNameList"></datalist></div>
+      <div class="form-group"><label>Model / Brand</label><input class="field" name="model" placeholder="e.g. Logitech M185"></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>RFID Code</label><input class="field" name="rfid" placeholder="Optional"></div>
+      <div class="form-group"><label>Quantity</label><input class="field" name="qty" type="number" min="1" value="1" required></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Initial Condition</label><select class="field" name="status"><option>In Service</option><option>Under Maintenance</option><option>Condemned</option><option>Lost</option></select></div>
+    </div>
+    <p class="form-hint">Each quantity creates a separate equipment record. New units start as <b>Unassigned</b>; use Assign Lab in Inventory to place each unit into a laboratory individually. Register each RFID tag separately afterwards.</p>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('assetModal')">Cancel</button><button class="btn primary">Save Asset</button></div>
+  </form>
+</div>
+</div>
+
+<!-- ASSIGN ONE EQUIPMENT UNIT TO A LAB -->
+<div class="modal-backdrop" id="assignLabModal">
+<div class="modal">
+  <div class="modal-head"><h2>Assign Equipment to Laboratory</h2><button class="modal-close" onclick="closeModal('assignLabModal')">×</button></div>
+  <form id="assignLabForm">
+    <div class="form-group"><label>Select one equipment unit</label><select class="field" name="unit" id="assignUnitSelect" required></select></div>
+    <div class="form-group"><label>Assign to Laboratory</label><select class="field" name="lab" id="assignLabSelect" required></select></div>
+    <p class="form-hint">Only the selected unit will be assigned. Other units in the same batch remain Unassigned until you assign them individually.</p>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('assignLabModal')">Cancel</button><button class="btn primary">Assign Unit</button></div>
+  </form>
+</div>
+</div>
+
+<!-- BATCH REGISTER & PAIR RFID -->
+<div class="modal-backdrop" id="rfidModal">
+<div class="modal" style="width:min(900px,100%);max-width:900px">
+  <div class="modal-head"><h2>Register &amp; Pair RFID Tags</h2><button class="modal-close" onclick="closeModal('rfidModal')">×</button></div>
+  <div class="form-hint" style="margin:0 0 12px">Scan one passive RFID sticker, select the matching equipment unit, then press <b>Pair</b>. The scanner stays ready for the next sticker.</div>
+  <div class="form-group"><label>Scanned RFID code</label><div class="code-row">
+    <input class="field" id="rfidCode" placeholder="Scan with RFID reader or enter code" autocomplete="off">
+    <button type="button" class="btn secondary" id="nfcBtn" onclick="scanNfc()"><i class='ic-tag'></i> Tap sticker</button>
+  </div></div>
+  <div class="nfc-status" id="rfidNfcMsg"><i class='ic-tag'></i> Tap the sticker to your NFC phone<small>Hold the sticker against the back of the phone. The code fills in automatically.</small></div>
+  <div class="section-head" style="margin-top:16px"><div><h3>Choose equipment to pair</h3><p id="batchPairCount">All untagged individual units are listed below.</p></div><button type="button" class="btn outline" onclick="renderBatchPairList()">Refresh list</button></div>
+  <div class="table-wrap" style="max-height:340px;overflow:auto"><table><thead><tr><th>EQUIPMENT UNIT</th><th>LABORATORY</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="batchPairRows"></tbody></table></div>
+  <p class="form-hint"><b>Passive RFID note:</b> Tap the sticker to an NFC-enabled Android phone using Chrome (the site must use HTTPS), or use a USB RFID reader that types the code for you.</p>
+  <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('rfidModal')">Finish / Close</button></div>
+</div>
+</div>
+
+<!-- BULK -->
+<div class="modal-backdrop" id="bulkModal">
+<div class="modal">
+  <div class="modal-head"><h2 id="bulkTitle">Bulk Quantity Update</h2><button class="modal-close" onclick="closeModal('bulkModal')">×</button></div>
+  <form id="bulkForm">
+    <div class="form-group"><label>Asset Type</label><select class="field" name="asset" id="bulkAssetSelect"></select></div>
+    <div class="form-group"><label>Room</label><select class="field" name="room" data-labs=""></select></div>
+    <div class="form-group"><label>Quantity</label><input class="field" name="qty" type="number" min="1" value="1" required></div>
+    <p class="form-hint" id="bulkHint"></p>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('bulkModal')">Cancel</button><button class="btn primary">Apply</button></div>
+  </form>
+</div>
+</div>
+
+<!-- UPDATE STATUS -->
+<div class="modal-backdrop" id="statusModal">
+<div class="modal">
+  <div class="modal-head"><h2>Update Asset Condition</h2><button class="modal-close" onclick="closeModal('statusModal')">×</button></div>
+  <form id="statusForm">
+    <p class="form-hint" id="statusTitle" style="font-size:13px;color:var(--text);font-weight:700;margin-bottom:14px"></p>
+    <div class="form-grid">
+      <div class="form-group"><label>From Condition</label><select class="field" name="from" id="statusFrom"></select></div>
+      <div class="form-group"><label>How Many</label><input class="field" name="qty" id="statusQty" type="number" min="1" value="1" required></div>
+    </div>
+    <div class="form-group"><label>New Condition</label><select class="field" name="status" id="statusTo"></select></div>
+    <div class="form-group"><label>Is the RFID tag still attached?</label><select class="field" name="attached"><option>Yes</option><option>No</option><option>Not sure</option></select></div>
+    <p class="form-hint">Choose Lost only when equipment is missing from its assigned lab. This creates an alert with its lab and RFID details. If the RFID tag is still attached, choose Yes.</p>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('statusModal')">Cancel</button><button class="btn primary">Update</button></div>
+  </form>
+</div>
+</div>
+
+<!-- TABLE PICKER -->
+<div class="modal-backdrop" id="tablePickerModal">
+<div class="modal wide">
+  <div class="modal-head"><h2>Items on this table</h2><button class="modal-close" onclick="closeModal('tablePickerModal')">×</button></div>
+  <p class="form-hint"><span id="tpCap"></span> · Tap objects to add them, then use ↑ ↓ to arrange their order on the table.</p>
+  <div class="table-ctl" style="margin:0 0 6px">
+    <b>Objects per square</b>
+    <select class="field" id="tpSplit" onchange="tpSetSplit(+this.value)"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+    <button type="button" class="btn secondary" onclick="tpQuickSet()">＋ Whole PC set</button>
+  </div>
+  <p class="form-hint" style="margin:0 0 10px">Divide each table square into smaller slots so a whole setup (computer, monitor, keyboard, mouse) fits on one square.</p>
+  <h2 style="font-size:13px;margin:6px 0 8px">Arrangement on table</h2>
+  <div id="tpOrder"></div>
+  <h2 style="font-size:13px;margin:14px 0 8px">Objects</h2>
+  <div id="tpChoices"></div>
+  <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('tablePickerModal')">Cancel</button><button type="button" class="btn primary" onclick="saveTablePicker()">Save</button></div>
+</div>
+</div>
+
+<!-- SCAN A TAG FOR AN ITEM -->
+<div class="modal-backdrop" id="tagScanModal">
+<div class="modal">
+  <div class="modal-head"><h2>Scan tag</h2><button class="modal-close" onclick="closeModal('tagScanModal')">×</button></div>
+  <p class="form-hint" id="tsTarget" style="margin:0 0 10px"></p>
+  <div class="nfc-status hidden" id="tsStatus"></div>
+  <div class="code-row" style="margin-bottom:10px">
+    <button type="button" class="btn secondary hidden" id="tsNfcBtn" onclick="tagNfc()"><i class='ic-tag'></i> Tap sticker</button>
+  </div>
+  <p class="form-hint"><b>Scan with NFC:</b> Open LAMS in Chrome on an NFC-enabled Android phone. Turn on NFC, tap the NFC button, then hold the tag near your phone. LAMS will save the tag and move to the next item. The website must use HTTPS.</p>
+  <div class="form-actions"><button type="button" class="btn primary" onclick="closeModal('tagScanModal')">Done</button></div>
+</div>
+</div>
+
+<!-- ADD LABORATORY -->
+<div class="modal-backdrop" id="labModal">
+<div class="modal">
+  <div class="modal-head"><h2>Add Laboratory</h2><button class="modal-close" onclick="closeModal('labModal')">×</button></div>
+  <form id="labForm">
+    <div class="form-group"><label>Laboratory name</label><input class="field" name="name" required placeholder="e.g. CS Laboratory"></div>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('labModal')">Cancel</button><button class="btn primary">Add Laboratory</button></div>
+  </form>
+</div>
+</div>
+
+<!-- ADD ROOM ITEM -->
+<div class="modal-backdrop" id="itemModal">
+<div class="modal">
+  <div class="modal-head"><h2>Add Furniture / Equipment</h2><button class="modal-close" onclick="closeModal('itemModal')">×</button></div>
+  <form id="itemForm">
+    <div class="form-group"><label>Item Name</label><input class="field" name="name" required placeholder="e.g. Router Cabinet"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Width (tiles)</label><select class="field" name="w">
+        <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="form-group"><label>Height (tiles)</label><select class="field" name="h">
+        <option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+    </div>
+    <div class="form-group"><label>Type</label><select class="field" name="kind"><option value="furniture">Furniture</option><option value="object">Object (goes on a table)</option></select></div>
+    <div class="form-group"><label>Color</label><input class="field" name="bg" type="color" value="#aad6d5" style="height:38px;padding:4px"></div>
+    <div class="form-group"><label>Icon</label><div class="icon-grid" id="iconGrid"></div></div>
+    <div class="form-group"><label>Preview</label><div class="prev-wrap"><div class="prev-obj" id="itemPreview"></div></div></div>
+    <div class="form-actions"><button type="button" class="btn outline" onclick="closeModal('itemModal')">Cancel</button><button class="btn primary">Add to Palette</button></div>
+  </form>
+</div>
+</div>
+
+<!-- ADD / EDIT SCHEDULE -->
+<div class="modal-backdrop" id="schedModal">
+<div class="modal">
+  <div class="modal-head"><h2 id="schedModalTitle">Add Class</h2><button class="modal-close" onclick="closeModal('schedModal')">×</button></div>
+  <form id="schedForm">
+    <input type="hidden" name="sid">
+    <div class="form-grid">
+      <div class="form-group"><label>Course Code</label><input class="field" name="code" required placeholder="e.g. BCA191"></div>
+      <div class="form-group"><label>Day</label><select class="field" name="day">
+        <option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option><option value="3">Thursday</option><option value="4">Friday</option><option value="5">Saturday</option><option value="6">Sunday</option></select></div>
+    </div>
+    <div class="form-group"><label>Section / Lab</label><input class="field" name="label" placeholder="e.g. ICT 3C or Embedded Laboratory"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Room</label><select class="field" name="room" data-labs="" required></select></div>
+      <div class="form-group"><label>Start</label><input class="field" name="start" type="time" required></div>
+    </div>
+    <div class="form-group"><label>End</label><input class="field" name="end" type="time" required></div>
+    <div class="form-actions">
+      <button type="button" class="btn danger hidden" id="schedDelete" onclick="deleteSched()">Delete</button>
+      <button type="button" class="btn outline" onclick="closeModal('schedModal')">Cancel</button>
+      <button class="btn primary">Save</button>
+    </div>
+  </form>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= CONSTANTS ================= */
+let labs=["Embedded Laboratory","IoT Laboratory","Network Laboratory"];   // laboratories (add more with "Add Laboratory")
+let savedRooms=[];                                  // saved room designs: {id,lab,name,cols,rows,items,savedAt}
+const STATUSES=["In Service","Under Maintenance","Condemned","Lost"];
+let COLS=16, ROWS=10; let SCALE=1, CELL=44; const ZOOMS=[0.5,0.75,1,1.5,2,3]; let zoomIdx=2;
+// Old room names from earlier saves are mapped to the new names on load
+const ROOM_RENAME={"Computer Lab 1":"Embedded Laboratory","Computer Lab 2":"IoT Laboratory","Electronics Lab":"Network Laboratory","Embedded Lab":"Embedded Laboratory","IoT Lab":"IoT Laboratory","Network Lab":"Network Laboratory"};
+const BASE_TYPES={
+  table:     {name:"Table",        icon:"▭",  w:2,h:1,bg:"#efe3cf",kind:"furniture"},
+  chair:     {name:"Chair",        icon:"🪑", w:1,h:1,bg:"#aad6d5",kind:"furniture"},
+  computer:  {name:"Computer",     icon:"🖥️", w:1,h:1,bg:"#dce8f7",kind:"object"},
+  printer:   {name:"Printer",      icon:"🖨️", w:1,h:1,bg:"#ece9f7",kind:"object"},
+  projector: {name:"Projector",    icon:"📽️", w:1,h:1,bg:"#f7ecd9",kind:"object"},
+  cabinet:   {name:"Cabinet",      icon:"🗄️", w:1,h:2,bg:"#eceff1",kind:"furniture"},
+  whiteboard:{name:"Whiteboard",   icon:"▬",  w:3,h:1,bg:"#ffffff",kind:"furniture"},
+  teacher:   {name:"Teacher Desk", icon:"📋", w:2,h:1,bg:"#f5dcdc",kind:"furniture"},
+  monitor:   {name:"Monitor",      icon:"📺", w:1,h:1,bg:"#d9ecf2",kind:"object"},
+  keyboard:  {name:"Keyboard",     icon:"⌨️", w:1,h:1,bg:"#e8e4f3",kind:"object"},
+  mouse:     {name:"Mouse",        icon:"🖱️", w:1,h:1,bg:"#e0efef",kind:"object"},
+  laptop:    {name:"Laptop",       icon:"💻", w:1,h:1,bg:"#dfe6f0",kind:"object"},
+  router: {name:"Router",icon:"svg:router",w:1,h:1,bg:"#dcefe6",kind:"object"},
+  netswitch: {name:"Network Switch",icon:"svg:switch",w:1,h:1,bg:"#e3ecf7",kind:"object"},
+  server: {name:"Server",icon:"svg:server",w:1,h:1,bg:"#e4e6ef",kind:"object"},
+  accesspoint: {name:"Access Point",icon:"svg:wifi",w:1,h:1,bg:"#dcecef",kind:"object"},
+  telephone: {name:"Telephone",icon:"☎️",w:1,h:1,bg:"#f7e0e0",kind:"object"},
+  smartphone: {name:"Smartphone",icon:"📱",w:1,h:1,bg:"#e6e9f5",kind:"object"},
+  tablet: {name:"Tablet",icon:"svg:tablet",w:1,h:1,bg:"#e1edf5",kind:"object"},
+  tvscreen: {name:"Smart TV",icon:"📺",w:1,h:1,bg:"#d9e4ef",kind:"object"},
+  webcam: {name:"Webcam",icon:"📷",w:1,h:1,bg:"#ece6f2",kind:"object"},
+  cctv: {name:"CCTV Camera",icon:"📹",w:1,h:1,bg:"#e9eaee",kind:"object"},
+  speaker: {name:"Speaker",icon:"🔊",w:1,h:1,bg:"#f3e8dc",kind:"object"},
+  microphone: {name:"Microphone",icon:"🎤",w:1,h:1,bg:"#f1e3e8",kind:"object"},
+  headset: {name:"Headset",icon:"🎧",w:1,h:1,bg:"#e5e3f4",kind:"object"},
+  scanner: {name:"Scanner",icon:"📠",w:1,h:1,bg:"#e8ecee",kind:"object"},
+  ups: {name:"UPS",icon:"svg:ups",w:1,h:1,bg:"#e1f0dc",kind:"object"},
+  powerstrip: {name:"Power Strip",icon:"🔌",w:1,h:1,bg:"#f4ebd2",kind:"object"},
+  flashdrive: {name:"Flash Drive",icon:"💾",w:1,h:1,bg:"#e8e8e0",kind:"object"},
+  arduino: {name:"Arduino Board",icon:"svg:chip",w:1,h:1,bg:"#d6ecec",kind:"object"},
+  raspi: {name:"Raspberry Pi",icon:"svg:chip",w:1,h:1,bg:"#dff0e6",kind:"object"},
+  breadboard: {name:"Breadboard",icon:"svg:breadboard",w:1,h:1,bg:"#e9efe3",kind:"object"},
+  oscilloscope: {name:"Oscilloscope",icon:"svg:scope",w:1,h:1,bg:"#d9eee9",kind:"object"},
+  multimeter: {name:"Multimeter",icon:"svg:meter",w:1,h:1,bg:"#f5e6cf",kind:"object"},
+  printer3d: {name:"3D Printer",icon:"svg:printer3d",w:1,h:1,bg:"#dcecf5",kind:"object"}
+};
+const ICONS=["🪑","🖥️","💻","🖨️","📽️","📺","⌨️","🖱️","☎️","📱","svg:tablet","svg:router","svg:switch","svg:server","svg:wifi","svg:ups","svg:chip","svg:breadboard","svg:scope","svg:meter","svg:printer3d","🎧","🎤","🔊","📷","📹","📠","💾","🔌"];
+/* Custom line-drawn gadget icons; "svg:name" tokens are resolved by iconHTML() */
+const ICON_SVG={"router": "<rect x=\"3\" y=\"13\" width=\"18\" height=\"7\" rx=\"2\"/><path d=\"M7 13V5M17 13V5M7.5 16.5h.01M11 16.5h.01\"/>", "switch": "<rect x=\"2\" y=\"8\" width=\"20\" height=\"9\" rx=\"2\"/><path d=\"M6 11.5v2.5M10 11.5v2.5M14 11.5v2.5M18 11.5v2.5\"/>", "server": "<rect x=\"3\" y=\"3\" width=\"18\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"14\" width=\"18\" height=\"7\" rx=\"2\"/><path d=\"M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6\"/>", "wifi": "<path d=\"M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0\"/><path d=\"M12 19.5h.01\"/>", "chip": "<rect x=\"6\" y=\"6\" width=\"12\" height=\"12\" rx=\"1.5\"/><rect x=\"9.5\" y=\"9.5\" width=\"5\" height=\"5\"/><path d=\"M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4\"/>", "scope": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M5 11l2.5-3 3 6 3-8 2.5 5H19\"/><path d=\"M7 20.5h.01M12 20.5h.01M16 20.5h4\"/>", "meter": "<rect x=\"6\" y=\"2\" width=\"12\" height=\"20\" rx=\"2\"/><rect x=\"8.5\" y=\"5\" width=\"7\" height=\"4\"/><circle cx=\"12\" cy=\"15\" r=\"2.6\"/><path d=\"M12 12.4V15\"/>", "breadboard": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"M3 12h18M7 8h.01M10 8h.01M13 8h.01M16 8h.01M7 16h.01M10 16h.01M13 16h.01M16 16h.01\"/>", "printer3d": "<path d=\"M5 21V4h14v17M3 21h18M5 8h14M10 8v3h4V8M12 11v3\"/><rect x=\"7.5\" y=\"16.5\" width=\"9\" height=\"2\"/>", "ups": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"2\"/><path d=\"M13 7l-3 5h4l-3 5\"/>", "tablet": "<rect x=\"4\" y=\"2\" width=\"16\" height=\"20\" rx=\"2\"/><path d=\"M11 18.5h2\"/>"};
+function iconHTML(ic){
+  if(typeof ic==="string"&&ic.indexOf("svg:")===0&&ICON_SVG[ic.slice(4)])
+    return '<svg class="gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON_SVG[ic.slice(4)]+'</svg>';
+  return ic;
+}
+
+/* ================= DATA (seed values) ================= */
+let assets=[
+{id:1,name:"Desktop Computer",rfid:"RFID-001",room:"Embedded Laboratory",qty:30,status:"In Service"},
+{id:2,name:"Monitor",rfid:"RFID-002",room:"Embedded Laboratory",qty:30,status:"In Service"},
+{id:3,name:"Keyboard",rfid:"RFID-003",room:"IoT Laboratory",qty:33,status:"In Service"},
+{id:4,name:"Keyboard",rfid:"",room:"IoT Laboratory",qty:2,status:"Condemned"},
+{id:5,name:"Printer",rfid:"RFID-004",room:"Network Laboratory",qty:4,status:"Under Maintenance"},
+{id:6,name:"Projector",rfid:"",room:"IoT Laboratory",qty:2,status:"Condemned"}
+];
+let bookings=[
+{id:1,name:"Juan Dela Cruz",room:"Embedded Laboratory",date:"2026-11-10",start:"08:00",end:"10:00",purpose:"Programming class",status:"Pending"},
+{id:2,name:"Maria Santos",room:"IoT Laboratory",date:"2026-11-11",start:"13:00",end:"15:00",purpose:"Networking lab",status:"Pending"},
+{id:3,name:"Pedro Garcia",room:"Network Laboratory",date:"2026-11-12",start:"09:00",end:"11:00",purpose:"Circuit testing",status:"Pending"}
+];
+let alerts=[]; // Only lost-equipment monitoring alerts are retained.
+let schedules=[
+{id:1,code:"BCA191",label:"Embedded Laboratory",room:"Embedded Laboratory",day:0,start:"10:00",end:"13:00"},
+{id:2,code:"GEC105",label:"CGEM 13",room:"IoT Laboratory",day:1,start:"07:30",end:"09:00"},
+{id:3,code:"GEC108",label:"ICT 3C",room:"Embedded Laboratory",day:1,start:"09:30",end:"12:00"},
+{id:4,code:"BCA190",label:"ICT 3C",room:"Embedded Laboratory",day:1,start:"14:30",end:"16:30"},
+{id:5,code:"BCA191",label:"ICT 3C",room:"Embedded Laboratory",day:2,start:"10:00",end:"11:30"},
+{id:6,code:"GEC105",label:"CGEM 13",room:"IoT Laboratory",day:3,start:"07:30",end:"09:00"},
+{id:7,code:"BCA190",label:"Network Laboratory",room:"Network Laboratory",day:3,start:"10:00",end:"13:00"}
+];
+let customTypes=[], hiddenTypes=[];
+let layouts={};
+let roomSizes={}; // per room: {cols, rows} in tiles
+let logs=[
+{text:"New monitor inventory added",time:"Today · 9:30 AM"},
+{text:"RFID tag registered",time:"Today · 9:12 AM"},
+{text:"Room 201 schedule updated",time:"Yesterday"}
+];
+let TYPES={};
+let activeTool=null, activeAsset=null, placeRot=0, selectedUid=null, pickedIcon=ICONS[0], alertFilter="all", currentGroups=[];
+
+/* ================= HELPERS ================= */
+const nid=arr=>Math.max(0,...arr.map(x=>x.id))+1;
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function nowStr(){return new Date().toLocaleString("en-PH",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});}
+function fmtTime(t){const[h,m]=t.split(":").map(Number);return `${((h+11)%12)+1}:${String(m).padStart(2,"0")} ${h>=12?"PM":"AM"}`;}
+function fmtDate(d){return new Date(d+"T00:00").toLocaleDateString("en-PH",{month:"short",day:"numeric",year:"numeric"});}
+function chip(n,cls){return `<span class="chip ${n?cls:"zero"}">${n}</span>`;}
+function addLog(text){logs.unshift({text,time:nowStr()});logs=logs.slice(0,20);}
+function addAlert(type,title,detail,bookingId){
+  if(type!=="lost") return;
+  alerts.unshift({id:nid(alerts),type:"lost",title,detail,time:nowStr(),status:"open"});
+}
+function openAlerts(){return alerts.filter(a=>a.type==="lost"&&a.status==="open");}
+
+function persist(){
+  try{localStorage.setItem("lams_v2",JSON.stringify({assets,bookings,alerts,schedules,customTypes,hiddenTypes,layouts,roomSizes,logs,labs,savedRooms}));}catch(e){}
+}
+function renameRoom(name){return ROOM_RENAME[name]||name;}
+function normSchedRoom(sc){
+  const r=renameRoom(sc.room);
+  if(labs.includes(r)) return r;
+  const t=(String(sc.label||"")+" "+String(sc.room||"")).toLowerCase();
+  for(const key of ["embedded","iot","network"]){ if(t.includes(key)){ const hit=labs.find(l=>l.toLowerCase().includes(key)); if(hit) return hit; } }
+  return labs[0];
+}
+// Why a requested slot is not available in a laboratory (class, or another booking)
+function slotConflict(room,date,start,end,ignoreId,onlyApproved){
+  const cc=classClash(room,date,start,end);
+  if(cc) return {kind:"class",item:cc,text:`${room} has class ${cc.code} (${fmtTime(cc.start)} – ${fmtTime(cc.end)}) on that day`};
+  const bk=bookings.find(x=>x.id!==ignoreId&&(x.status==="Approved"||(!onlyApproved&&x.status==="Pending"))&&x.date===date&&toMin(x.start)<toMin(end)&&toMin(start)<toMin(x.end));
+  if(bk) return {kind:"booking",item:bk,text:`${bk.status==="Approved"?"There is already an approved booking":"There is already a pending request"} by ${bk.name} in ${bk.room} (${fmtTime(bk.start)} – ${fmtTime(bk.end)})`};
+  return null;
+}
+// Free time ranges in a laboratory on a date (7:00 AM – 7:00 PM), at least minMin long
+function freeRanges(room,date,minMin,ignoreId){
+  const dow=dayOfDate(date);
+  const busy=[
+    ...schedules.filter(c=>c.room===room&&c.day===dow).map(c=>[toMin(c.start),toMin(c.end)]),
+    ...bookings.filter(x=>x.id!==ignoreId&&(x.status==="Approved"||x.status==="Pending")&&x.date===date).map(x=>[toMin(x.start),toMin(x.end)])
+  ].sort((p,q)=>p[0]-q[0]);
+  const lo=SCH_START, hi=SCH_START+SCH_SLOTS*30; let cur=lo; const out=[];
+  busy.forEach(([a,b])=>{ if(a-cur>=minMin) out.push([cur,a]); cur=Math.max(cur,b); });
+  if(hi-cur>=minMin) out.push([cur,hi]);
+  return out.map(([a,b])=>`${fmtTime(minToTime(a))} – ${fmtTime(minToTime(b))}`);
+}
+function isoDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function todayStr(){return isoDate(new Date());}
+function dayOfDate(ds){return (new Date(ds+"T00:00:00").getDay()+6)%7;}
+// A weekly class that overlaps a requested booking slot in the same laboratory
+function classClash(room,date,start,end){
+  const dow=dayOfDate(date);
+  return schedules.find(c=>c.room===room&&c.day===dow&&toMin(c.start)<toMin(end)&&toMin(start)<toMin(c.end));
+}
+// An approved upcoming booking that overlaps a class slot {room,day,start,end}
+function bookingClash(c){
+  const t=todayStr();
+  return bookings.find(b=>b.status==="Approved"&&b.room===c.room&&b.date>=t&&dayOfDate(b.date)===c.day&&toMin(b.start)<toMin(c.end)&&toMin(c.start)<toMin(b.end));
+}
+
+function restore(){
+  try{
+    const d=JSON.parse(localStorage.getItem("lams_v2")||"null");
+    if(d){
+      assets=d.assets||assets; bookings=d.bookings||bookings; alerts=(d.alerts||[]).filter(a=>a.type==="lost"||a.statusType==="lost").map(a=>({...a,type:"lost"}));
+      if(d.schedules&&d.schedules.length&&d.schedules[0].start) schedules=d.schedules;
+      customTypes=d.customTypes||[]; hiddenTypes=d.hiddenTypes||[]; layouts=d.layouts||{}; roomSizes=d.roomSizes||{}; logs=d.logs||logs;
+      labs=(d.labs&&d.labs.length)?d.labs:labs; savedRooms=d.savedRooms||[];
+    }
+  }catch(e){}
+  hiddenTypes=hiddenTypes.filter(k=>k!=="table");
+  // Migrate old room names in saved data
+  assets.forEach(a=>a.room=renameRoom(a.room));
+  bookings.forEach(b=>b.room=renameRoom(b.room));
+  labs=[...new Set(labs.map(renameRoom))];
+  schedules.forEach(c=>{c.room=normSchedRoom(c);});
+  // Approved bookings that overlap a class (same lab) or an earlier approved booking go back to Pending,
+  // so the calendar never shows overlapping bookings and the admin must re-check them.
+  (function(){
+    const kept=[]; let moved=0;
+    bookings.filter(b=>b.status==="Approved").sort((p,q)=>p.id-q.id).forEach(b=>{
+      const bad=classClash(b.room,b.date,b.start,b.end)||kept.some(x=>x.date===b.date&&toMin(x.start)<toMin(b.end)&&toMin(b.start)<toMin(x.end));
+      if(bad){ b.status="Pending"; moved++; } else kept.push(b);
+    });
+    if(moved){
+      logs.unshift({text:`${moved} overlapping booking${moved>1?"s were":" was"} moved back to Pending`,time:"Today"});
+      setTimeout(()=>{ try{ persist(); refreshAll(); toast(`${moved} overlapping booking${moved>1?"s were":" was"} moved back to Pending for review.`);}catch(e){} },400);
+    }
+  })();
+  alerts.forEach(a=>{
+    Object.entries(ROOM_RENAME).forEach(([o,n])=>{
+      a.detail=String(a.detail||"").split(o).join(n);
+    });
+  });
+  const migrated={};
+  Object.keys(layouts).forEach(k=>migrated[renameRoom(k)]=layouts[k]);
+  layouts=migrated;
+  savedRooms.forEach(r=>r.lab=renameRoom(r.lab));
+  // Make sure every room used by data is a known laboratory
+  [...assets.map(a=>a.room),...Object.keys(layouts),...savedRooms.map(r=>r.lab)].forEach(r=>{if(r&&!labs.includes(r)) labs.push(r);});
+}
+function rebuildTypes(){TYPES={...BASE_TYPES};customTypes.forEach(t=>TYPES[t.key]=t);}
+
+/* ================= ROOM BUILDER ================= */
+const SURFACE_TYPES=["computer","printer","projector","monitor","keyboard","mouse","laptop"];
+// Items that can sit on top of a table: the built-in surface types, plus any custom 1x1 item
+function canSit(type){
+  if(SURFACE_TYPES.includes(type)) return true;
+  const t=TYPES[type];
+  return !!t && customTypes.some(c=>c.key===type) && t.w===1 && t.h===1;
+}
+// Position of slot i on a table that is w tiles wide
+function splitOf(o){return Math.min(6,Math.max(1,o.split||1));}
+// Box (css + icon size) of slot i on table o. Each table square can be divided into `split` slots.
+function slotBox(i,o,w){
+  const s=splitOf(o), tile=Math.floor(i/s), sub=i%s;
+  const tx=(tile%w)*CELL, ty=Math.floor(tile/w)*CELL;
+  if(s===1) return {css:`left:${tx+8*SCALE}px;top:${ty+3*SCALE}px;width:${28*SCALE}px;height:${28*SCALE}px;`,font:17*SCALE,w:28*SCALE,h:28*SCALE};
+  const cols=s<=2?s:(s<=4?2:3), rows=Math.ceil(s/cols), pad=3*SCALE, gap=2*SCALE;
+  const cw=(CELL-2*pad-gap*(cols-1))/cols, ch=(CELL-2*pad-gap*(rows-1))/rows;
+  const left=tx+pad+(sub%cols)*(cw+gap), top=ty+pad+Math.floor(sub/cols)*(ch+gap);
+  return {css:`left:${left}px;top:${top}px;width:${cw}px;height:${ch}px;`,font:Math.max(8,Math.min(16*SCALE,Math.floor(Math.min(cw,ch)*0.72))),w:cw,h:ch};
+}
+
+function sampleLab(){
+  const list=[]; let u=1;
+  const add=(type,x,y,rot=0)=>list.push({uid:u++,type,x,y,rot});
+  add("whiteboard",6,0); add("cabinet",14,0);
+  for(const tx of [2,6,10]){
+    add("computer",tx,2); add("computer",tx+1,2);
+    add("table",tx,3); add("chair",tx,4); add("chair",tx+1,4);
+  }
+  add("teacher",6,7); add("printer",1,8);
+  return list;
+}
+function defaultLayout(room){return room==="Embedded Laboratory"?sampleLab():[];}
+function saveLayouts(){persist();}
+function currentRoom(){return document.getElementById("layoutRoom").value;}
+function getItems(room){
+  if(!layouts[room]) layouts[room]=defaultLayout(room);
+  return layouts[room];
+}
+function dims(o){
+  const t=TYPES[o.type]||{w:1,h:1};
+  const w=o.tw||t.w, h=o.th||t.h;
+  return o.rot?{w:h,h:w}:{w:w,h:h};
+}
+function nextUid(items){return Math.max(0,...items.map(i=>i.uid))+1;}
+function fits(items,uid,type,x,y,rot,tw,th){
+  const t=TYPES[type];
+  const w0=tw||t.w, h0=th||t.h;
+  const w=rot?h0:w0, h=rot?w0:h0;
+  if(x<0||y<0||x+w>COLS||y+h>ROWS) return false;
+  return !items.some(i=>{
+    if(i.uid===uid||i.onTable) return false; // items on a table don't use floor tiles
+    const d=dims(i);
+    return x<i.x+d.w && x+w>i.x && y<i.y+d.h && y+h>i.y;
+  });
+}
+function getCell(e){
+  const floor=document.getElementById("roomFloor");
+  const r=floor.getBoundingClientRect();
+  return {x:Math.floor((e.clientX-r.left-floor.clientLeft)/CELL), y:Math.floor((e.clientY-r.top-floor.clientTop)/CELL)};
+}
+function cellInside(o,cx,cy){
+  const d=dims(o);
+  return cx>=o.x && cx<o.x+d.w && cy>=o.y && cy<o.y+d.h;
+}
+function tableCap(o){const d=dims(o); return d.w*d.h*splitOf(o);}
+
+// Consume exactly one inventory unit only after a room placement succeeds.
+// RFID-tagged single-unit records keep their tag on the placed room object.
+function consumePlacedAsset(){
+  if(!activeAsset) return "";
+  const a=assets.find(x=>x.room===activeAsset.room&&x.name===activeAsset.name&&(+x.qty||0)>0);
+  if(!a){ toast("No remaining inventory for this item."); return ""; }
+  const tag=a.qty===1?(a.rfid||""):"";
+  a.qty-=1;
+  if(a.qty<=0) assets=assets.filter(x=>x!==a);
+  addLog(`1 × ${a.name} placed in ${currentRoom()} room layout`);
+  persist();
+  if(typeof refreshAll==="function") refreshAll();
+  return tag;
+}
+function addToTable(tbl,key){
+  if(activeAsset&&activeAsset.room!==currentRoom()) return toast(`This asset belongs to ${activeAsset.room}. Change to that laboratory to place it.`);
+  if(activeAsset&&!assets.some(a=>a.room===activeAsset.room&&a.name===activeAsset.name&&(+a.qty||0)>0)) return toast("No remaining inventory for this item.");
+  const items=getItems(currentRoom());
+  const used=items.filter(i=>i.onTable===tbl.uid).length;
+  if(used>=tableCap(tbl)){ toast("That table is full. Raise 'Objects per square' or make it bigger."); return; }
+  const tag=consumePlacedAsset();
+  items.push({uid:nextUid(items),type:key,x:tbl.x,y:tbl.y,rot:0,onTable:tbl.uid,rfid:tag,status:"In Service"});
+  saveLayouts(); selectedUid=tbl.uid; renderRoom();
+  toast(TYPES[key].name+" placed on the table. Inventory decreased by 1.");
+}
+function placeAt(cx,cy){
+  const items=getItems(currentRoom());
+  if(activeAsset&&activeAsset.room!==currentRoom()) return toast(`This asset belongs to ${activeAsset.room}. Change to that laboratory to place it.`);
+  if(activeAsset&&!assets.some(a=>a.room===activeAsset.room&&a.name===activeAsset.name&&(+a.qty||0)>0)) return toast("No remaining inventory for this item.");
+  // Clicking a table (while placing) opens the item picker for that table
+  const tbl=items.find(i=>i.type==="table"&&!i.onTable&&cellInside(i,cx,cy));
+  if(tbl&&(TYPES[activeTool].kind||"furniture")==="object") return addToTable(tbl,activeTool);
+  if(tbl){ activeTool=null; activeAsset=null; renderRoom(); return openTablePicker(tbl.uid); }
+  if(!fits(items,null,activeTool,cx,cy,placeRot)) return toast("No space there. Try another spot.");
+  const tag=consumePlacedAsset();
+  items.push({uid:nextUid(items),type:activeTool,x:cx,y:cy,rot:placeRot,rfid:tag,status:"In Service"});
+  saveLayouts(); renderRoom();
+  toast(TYPES[activeTool].name+" placed. Inventory decreased by 1.");
+}
+// Which room item an asset stands for (exact name first, then the longest name it contains)
+function matchType(name){
+  const n=String(name).toLowerCase().trim();
+  const all=Object.entries(TYPES).map(([k,t])=>[k,t.name.toLowerCase()]);
+  const exact=all.find(([,m])=>m===n); if(exact) return exact[0];
+  const part=all.filter(([,m])=>m.length>2&&(n.includes(m)||m.includes(n))).sort((a,b)=>b[1].length-a[1].length)[0];
+  return part?part[0]:null;
+}
+// Gives every asset something to drop: reuse the matching item, or create one for it (e.g. "PC")
+function ensureAssetType(name){
+  let k=matchType(name); if(k) return k;
+  k="asset_"+String(name).toLowerCase().replace(/[^a-z0-9]+/g,"_");
+  customTypes.push({key:k,name:String(name),icon:"🔌",w:1,h:1,bg:"#e0efef",kind:"object"});
+  rebuildTypes(); persist();
+  return k;
+}
+function iconFor(name){
+  const mk=matchType(name); const hit=mk?TYPES[mk]:null;
+  return hit?{icon:hit.icon,bg:hit.bg}:{icon:"🔌",bg:"#e0efef"};
+}
+function deleteAsset(key){
+  const [room,name]=decodeURIComponent(key).split("||");
+  if(!confirm(`Delete all "${name}" assets from ${room}?`)) return;
+  assets=assets.filter(a=>!(a.room===room&&a.name===name));
+  persist(); if(typeof refreshAll==="function") refreshAll(); renderRoom(); toast(name+" deleted from "+room+".");
+}
+// Pieces of a palette item that the current laboratory owns (from its assets)
+function pcsIn(room,name){
+  const n=String(name).toLowerCase();
+  return assets.filter(a=>a.room===room).filter(a=>{
+    const m=String(a.name).toLowerCase(); return m===n||m.includes(n)||n.includes(m);
+  }).reduce((t,a)=>t+(+a.qty||0),0);
+}
+function fillAssetNameList(){
+  const dl=document.getElementById("assetNameList"); if(!dl) return;
+  dl.innerHTML=Object.values(TYPES).filter(t=>t.name!=="Table").map(t=>`<option value="${esc(t.name)}"></option>`).join("");
+}
+function renderPalette(){
+  fillAssetNameList();
+  const room=currentRoom();
+  const list=Object.entries(TYPES).filter(([k,t])=>k!=="table"&&(t.kind||"furniture")==="furniture"&&!hiddenTypes.includes(k));
+  document.getElementById("palette").innerHTML=list.map(([k,t])=>{
+    const pcs=pcsIn(room,t.name);
+    return `<button class="palette-item ${activeTool===k?"active":""}" draggable="true" data-key="${k}">
+       <span class="palette-swatch" style="background:${t.bg}">${iconHTML(t.icon)}</span>
+       <div><b>${esc(t.name)}</b><small>${pcs} pc${pcs===1?"":"s"}</small></div>
+       ${k==="table"?"":`<span class="pdel" data-del="${k}" title="Delete item">×</span>`}
+     </button>`;
+  }).join("")+assetItemsHTML()+(hiddenTypes.length?`<button class="btn outline palette-add" onclick="restoreTypes()">Restore ${hiddenTypes.length} removed item${hiddenTypes.length===1?"":"s"}</button>`:"");
+}
+// Every asset added in any room, listed right under the furniture: name, room, pieces, X to delete
+function assetItemsHTML(){
+  const g={};
+  const room=currentRoom();
+  // Show only registered assets assigned to the currently selected laboratory.
+  assets.filter(a=>a.room===room).forEach(a=>{ const k=a.room+"||"+a.name; (g[k]=g[k]||{room:a.room,name:a.name,qty:0}).qty+=(+a.qty||0); });
+  const tt=TYPES.table;
+  const tableRow=tt?`<button class="palette-item ${activeTool==="table"?"active":""}" draggable="true" data-key="table" title="Drag into the room, or click then click the room">
+       <span class="palette-swatch" style="background:${tt.bg}">${iconHTML(tt.icon)}</span>
+       <div><b>Table</b><small>Furniture · holds equipment</small></div>
+     </button>`:"";
+  return Object.entries(g).map(([k,v])=>{
+    const ic=iconFor(v.name);
+    const mk=matchType(v.name);
+    return `<div class="palette-item asset-item ${mk&&activeTool===mk?"active":""}" draggable="true" data-aname="${encodeURIComponent(v.name)}" data-aroom="${encodeURIComponent(v.room)}" title="Drag into the room, or click then click the room">
+       <span class="palette-swatch" style="background:${ic.bg}">${iconHTML(ic.icon)}</span>
+       <div><b>${esc(v.name)}</b><small>${esc(v.room)} · ${v.qty} pc${v.qty===1?"":"s"}</small></div>
+       <span class="pdel" data-delasset="${encodeURIComponent(k)}" title="Delete asset">×</span>
+     </div>`;
+  }).join("")+tableRow;
+}
+function restoreTypes(){ hiddenTypes=[]; persist(); renderRoom(); toast("Removed items restored."); }
+function tableControls(o){
+  const w=o.tw||TYPES.table.w, h=o.th||TYPES.table.h;
+  const opts=(max,cur)=>Array.from({length:max},(_,i)=>i+1)
+    .map(k=>`<option ${k===cur?"selected":""}>${k}</option>`).join("");
+  const n=getItems(currentRoom()).filter(i=>i.onTable===o.uid).length;
+  return `<div class="table-ctl">
+    Width <select class="field" onchange="resizeTable(${o.uid},'tw',+this.value)">${opts(8,w)}</select>
+    Depth <select class="field" onchange="resizeTable(${o.uid},'th',+this.value)">${opts(4,h)}</select>
+    Objects per square <select class="field" onchange="setSplit(${o.uid},+this.value)">${opts(6,splitOf(o))}</select>
+    <button class="btn outline" onclick="openTablePicker(${o.uid})">Choose items</button>
+    <button class="btn outline" onclick="fitTable(${o.uid})">Fit to items</button>
+    <span>${n}/${tableCap(o)} items</span>
+  </div>`;
+}
+function setSplit(uid,v){
+  const items=getItems(currentRoom());
+  const o=items.find(i=>i.uid===uid); if(!o) return;
+  const old=o.split; o.split=v;
+  const used=items.filter(i=>i.onTable===uid).length;
+  if(used>tableCap(o)){ o.split=old; toast("Remove some items first, then lower the split."); }
+  else toast(v>1?`Each square now holds ${v} objects.`:"Each square holds 1 object.");
+  saveLayouts(); renderRoom();
+}
+function resizeTable(uid,key,val){
+  const items=getItems(currentRoom());
+  const o=items.find(i=>i.uid===uid); if(!o) return;
+  const old=o[key]; o[key]=val;
+  const used=items.filter(i=>i.onTable===uid).length;
+  if(!fits(items,uid,o.type,o.x,o.y,o.rot,o.tw,o.th)||used>tableCap(o)){
+    o[key]=old; toast("Not enough room for that size.");
+  } else toast("Table resized.");
+  saveLayouts(); renderRoom();
+}
+function fitTable(uid){
+  const items=getItems(currentRoom());
+  const o=items.find(i=>i.uid===uid); if(!o) return;
+  const n=items.filter(i=>i.onTable===uid).length;
+  const th=o.th||TYPES.table.h;
+  const old=o.tw;
+  o.tw=Math.max(2,Math.ceil(n/(th*splitOf(o))));
+  if(!fits(items,uid,o.type,o.x,o.y,o.rot,o.tw,o.th)){
+    o.tw=old; return toast("No room to grow this table.");
+  }
+  saveLayouts(); renderRoom(); toast(`Table fitted to ${n} item(s).`);
+}
+function updateSelInfo(){
+  const el=document.getElementById("selInfo");
+  if(activeTool){
+    el.innerHTML=`Placing: <strong>${esc(TYPES[activeTool].name)}</strong> · click the room to place · <kbd>R</kbd> rotates · <kbd>Esc</kbd> cancels`;
+    return;
+  }
+  const o=getItems(currentRoom()).find(i=>i.uid===selectedUid);
+  if(o&&TYPES[o.type]) el.innerHTML=`Selected: <strong>${esc(TYPES[o.type].name)}</strong> · drag to move · <kbd>R</kbd> rotate · <kbd>Del</kbd> remove`;
+  else el.textContent="Pick an item from the list, then click the room. Or drag an item onto the room.";
+  if(o&&o.type==="table"&&!activeTool) el.insertAdjacentHTML("beforeend",tableControls(o));
+  if(o&&!activeTool) el.insertAdjacentHTML("beforeend",rfidControl(o));
+  document.getElementById("rotateBtn").disabled=!o;
+}
+function zoomRoom(dir){
+  const n=Math.min(ZOOMS.length-1,Math.max(0,zoomIdx+dir));
+  if(n===zoomIdx) return;
+  zoomIdx=n; SCALE=ZOOMS[n]; CELL=Math.round(44*SCALE); renderRoom();
+}
+function syncRoomSize(room){
+  const s=roomSizes[room]||{cols:16,rows:10};
+  COLS=s.cols; ROWS=s.rows;
+  const floor=document.getElementById("roomFloor");
+  // +12 for the 6px border on each side (box-sizing: border-box is set globally)
+  floor.style.width=(COLS*CELL+12)+"px";
+  floor.style.height=(ROWS*CELL+12)+"px";
+  floor.style.backgroundSize=CELL+"px "+CELL+"px";
+  floor.style.setProperty("--z",SCALE);
+  const zl=document.getElementById("zoomLbl"); if(zl) zl.textContent=Math.round(SCALE*100)+"%";
+  document.getElementById("roomW").value=COLS;
+  document.getElementById("roomH").value=ROWS;
+}
+function applyRoomSize(){
+  const room=currentRoom();
+  const w=Math.round(+document.getElementById("roomW").value);
+  const h=Math.round(+document.getElementById("roomH").value);
+  if(!(w>=4&&w<=30&&h>=4&&h<=20)) return toast("Width must be 4–30 and height 4–20 tiles.");
+  const items=getItems(room);
+  const outside=items.some(i=>{
+    if(i.onTable) return false; // items on a table sit inside the table
+    const d=dims(i);
+    return i.x+d.w>w || i.y+d.h>h;
+  });
+  if(outside) return toast("Some items would fall outside that size. Move them or pick a larger size.");
+  roomSizes[room]={cols:w,rows:h};
+  selectedUid=null;
+  saveLayouts(); renderRoom();
+  toast(`Room resized to ${w} × ${h} tiles.`);
+}
+function renderRoom(){
+  const room=currentRoom();
+  document.getElementById("roomTitle").textContent=room;
+  syncRoomSize(room);
+  const floor=document.getElementById("roomFloor");
+  floor.classList.toggle("placing",!!activeTool);
+  floor.innerHTML="";
+  const showTags=document.getElementById("showRfid").checked;
+  getItems(room).forEach(o=>{
+    if(o.onTable) return; // drawn on top of its table below
+    const t=TYPES[o.type]; if(!t) return;
+    const d=dims(o);
+    const cap=tableCap(o), sp=splitOf(o);
+    const kids=getItems(room).filter(i=>i.onTable===o.uid);
+    const el=document.createElement("div");
+    el.className="room-obj"+(o.uid===selectedUid?" sel":"");
+    el.dataset.uid=o.uid;
+    el.style.cssText=`left:${o.x*CELL}px;top:${o.y*CELL}px;width:${d.w*CELL}px;height:${d.h*CELL}px;background:${t.bg}`;
+
+    if(o.type==="table"){
+      // When a square is divided, outline each square so the split is easy to see
+      if(sp>1){
+        for(let k=0;k<d.w*d.h;k++){
+          const fr=document.createElement("div");
+          fr.style.cssText=`position:absolute;left:${(k%d.w)*CELL+1}px;top:${Math.floor(k/d.w)*CELL+1}px;width:${CELL-2}px;height:${CELL-2}px;border:1px solid #c9bb9d;border-radius:5px;pointer-events:none`;
+          el.appendChild(fr);
+        }
+      }
+      // Empty dashed boxes = free slots on top of the table
+      for(let i=0;i<cap;i++){
+        if(i<kids.length) continue;
+        const b=slotBox(i,o,d.w);
+        const sl=document.createElement("div");
+        sl.className="table-slot";
+        sl.style.cssText=`position:absolute;${b.css}border:${sp>1?1.5:2}px dashed #6faead;border-radius:${sp>1?4:6}px;pointer-events:none`;
+        el.appendChild(sl);
+      }
+      // Items on top, one per slot, in order (order = arrangement on the table)
+      kids.forEach((k,i)=>{
+        const kt=TYPES[k.type]; if(!kt) return;
+        const b=slotBox(i,o,d.w);
+        const c=document.createElement("div");
+        c.className="table-item";
+        c.dataset.kid=k.uid;
+        c.title=kt.name+" (#"+(i+1)+")"+(k.rfid?" · "+k.rfid:"");
+        c.innerHTML=iconHTML(kt.icon);
+        c.style.cssText=`position:absolute;${b.css}background:${kt.bg};border-radius:${sp>1?4:6}px;display:flex;align-items:center;justify-content:center;font-size:${b.font}px;box-shadow:0 1px 3px #183c3b33;pointer-events:none`;
+        if(showTags&&k.rfid){
+          // number badge in the square (matches the legend under the table)
+          const nb=document.createElement("i");
+          nb.textContent=i+1;
+          nb.style.cssText=`position:absolute;right:1px;top:1px;min-width:${Math.max(9,9*SCALE)}px;height:${Math.max(9,9*SCALE)}px;padding:0 2px;border-radius:${Math.max(5,5*SCALE)}px;background:#008584;color:#fff;font:700 ${Math.max(7,7*SCALE)}px/${Math.max(9,9*SCALE)}px Helvetica,Arial,sans-serif;text-align:center;font-style:normal`;
+          c.appendChild(nb);
+          // when the square is big enough (zoomed in), print the code inside it too
+          if(b.w>=56){
+            const cd=document.createElement("i");
+            cd.textContent=k.rfid;
+            cd.style.cssText="position:absolute;left:1px;right:1px;bottom:1px;font:700 9px/1.2 ui-monospace,Consolas,monospace;font-style:normal;text-align:center;background:#ffffffdd;color:#006c6b;border-radius:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap";
+            c.appendChild(cd);
+          }
+        }
+        if(k.status&&k.status!=="In Service"){
+          const sd=document.createElement("i");
+          sd.style.cssText=`position:absolute;left:2px;bottom:2px;width:14px;height:14px;border-radius:50%;background:${k.status==="Condemned"?"#df5757":"#e9a33b"};border:2px solid #fff`;
+          sd.title=k.status; c.appendChild(sd);
+        }
+        el.appendChild(c);
+      });
+      if(sp===1){
+        // Caption along the bottom edge
+        const cap_el=document.createElement("div");
+        cap_el.style.cssText=`position:absolute;left:0;right:0;bottom:0;height:${13*SCALE}px;font-size:${9*SCALE}px;line-height:${13*SCALE}px;text-align:center;color:#2c3a3a;pointer-events:none;white-space:nowrap;overflow:hidden`;
+        cap_el.textContent=`${t.name} · ${kids.length}/${cap} on top`+(showTags&&o.rfid?` · ${o.rfid}`:"");
+        el.appendChild(cap_el);
+      } else {
+        el.title=`${t.name}: ${kids.length}/${cap} items, ${sp} per square`+(o.rfid?` · ${o.rfid}`:"");
+      }
+    } else {
+      el.innerHTML=`<span>${iconHTML(t.icon)}</span><b>${esc(t.name)}</b>`+(showTags&&o.rfid?`<i class="rfid-tag" title="${esc(o.rfid)}">${esc(o.rfid)}</i>`:"");
+    }
+
+    el.addEventListener("pointerdown",e=>startDrag(e,o));
+    if(o.type==="table"){
+      el.addEventListener("dblclick",e=>{e.stopPropagation(); openTablePicker(o.uid);});
+    }
+    floor.appendChild(el);
+    // Legend under each table: only while "Show RFID labels" is ticked
+    if(o.type==="table"&&showTags&&(o.rfid||kids.some(k=>k.rfid))){
+      const rows=kids.map((k,i)=>{const kt=TYPES[k.type]; return kt?`<div><b>${i+1}</b> ${esc(kt.name)} · ${k.rfid?esc(k.rfid):"no tag"}</div>`:"";}).join("");
+      const head=o.rfid?`<div><b>Table</b> · ${esc(o.rfid)}</div>`:"";
+      const lg=document.createElement("div");
+      lg.className="rfid-legend";
+      lg.style.cssText=`left:${o.x*CELL}px;top:${(o.y+d.h)*CELL+3}px;min-width:${Math.max(d.w*CELL,110)}px`;
+      lg.innerHTML=head+rows;
+      floor.appendChild(lg);
+    }
+  });
+  renderPalette();
+  updateSelInfo();
+  renderRfidPanel();
+}
+function startDrag(e,o){
+  if(activeTool) return;
+  e.preventDefault();
+  selectedUid=o.uid;
+  document.querySelectorAll(".room-obj").forEach(x=>x.classList.toggle("sel",+x.dataset.uid===o.uid));
+  updateSelInfo();
+  const el=e.currentTarget;
+  el.setPointerCapture(e.pointerId);
+  const start=getCell(e);
+  const offX=start.x-o.x, offY=start.y-o.y;
+  const origX=o.x, origY=o.y;
+  const items=getItems(currentRoom());
+  const move=ev=>{
+    const c=getCell(ev);
+    const nx=c.x-offX, ny=c.y-offY;
+    if((nx!==o.x||ny!==o.y)&&fits(items,o.uid,o.type,nx,ny,o.rot,o.tw,o.th)){
+      o.x=nx; o.y=ny;
+      el.style.left=(o.x*CELL)+"px"; el.style.top=(o.y*CELL)+"px";
+    }
+  };
+  const up=()=>{
+    el.removeEventListener("pointermove",move);
+    el.removeEventListener("pointerup",up);
+    el.removeEventListener("pointercancel",up);
+    if(o.x!==origX||o.y!==origY){saveLayouts(); toast(TYPES[o.type].name+" moved.");}
+  };
+  el.addEventListener("pointermove",move);
+  el.addEventListener("pointerup",up);
+  el.addEventListener("pointercancel",up);
+}
+function rotateCurrent(){
+  if(activeTool){placeRot=placeRot?0:1; updateSelInfo(); return;}
+  const items=getItems(currentRoom());
+  const o=items.find(i=>i.uid===selectedUid);
+  if(!o) return;
+  if(!fits(items,o.uid,o.type,o.x,o.y,o.rot?0:1,o.tw,o.th)) return toast("No room to rotate here.");
+  o.rot=o.rot?0:1;
+  saveLayouts(); renderRoom();
+}
+function deleteSelected(){
+  if(selectedUid==null) return;
+  const room=currentRoom();
+  layouts[room]=getItems(room).filter(i=>i.uid!==selectedUid && i.onTable!==selectedUid);
+  selectedUid=null; saveLayouts(); renderRoom(); toast("Item removed.");
+}
+function cancelTool(){activeTool=null; activeAsset=null; placeRot=0; selectedUid=null; renderRoom();}
+function changeRoom(){selectedUid=null; renderRoom();}
+function clearRoom(){layouts[currentRoom()]=[]; selectedUid=null; saveLayouts(); renderRoom(); toast("Room cleared.");}
+function resetRoom(){layouts[currentRoom()]=defaultLayout(currentRoom()); selectedUid=null; saveLayouts(); renderRoom(); toast("Layout reset to sample.");}
+
+/* Table picker: choose which objects sit on a table, arrange their order, divide squares, link RFID */
+let pickerTableUid=null, pickerSelection=[], pickerSplit=1;
+function pickerCap(){
+  const tbl=getItems(currentRoom()).find(i=>i.uid===pickerTableUid);
+  if(!tbl) return 0;
+  const d=dims(tbl); return d.w*d.h*pickerSplit;
+}
+function openTablePicker(uid){
+  const items=getItems(currentRoom());
+  const tbl=items.find(i=>i.uid===uid); if(!tbl) return;
+  pickerTableUid=uid; pickerSplit=splitOf(tbl);
+  pickerSelection=items.filter(i=>i.onTable===uid).map(i=>({type:i.type,rfid:i.rfid||"",status:i.status||"In Service"})); // current order
+  renderTablePicker();
+  openModal("tablePickerModal");
+}
+function renderTablePicker(){
+  const cap=pickerCap();
+  document.getElementById("tpCap").textContent=`${pickerSelection.length}/${cap} items`;
+  document.getElementById("tpSplit").value=pickerSplit;
+  const used=usedTagSet(pickerTableUid);
+  pickerSelection.forEach(x=>{ if(x.rfid) used.add(x.rfid.toLowerCase()); });
+  // Selected list (ordered)
+  document.getElementById("tpOrder").innerHTML=pickerSelection.length
+    ? pickerSelection.map((x,i)=>{
+        const tt=TYPES[x.type]||{name:x.type,icon:"?",bg:"#eee"};
+        return `<div class="tp-row">
+          <span class="palette-swatch" style="background:${tt.bg}">${iconHTML(tt.icon)}</span>
+          <div style="flex:1;min-width:110px"><b>${i+1}. ${esc(tt.name)}</b><div class="asset-sub">Square ${Math.floor(i/pickerSplit)+1}</div></div>
+          ${tagInputHTML(currentRoom(),x.rfid,used,`tpSetTag(${i},this.value)`,"tgl"+i,x.type,"p:"+i)}
+          ${statusSelectHTML(x.status,`tpSetStatus(${i},this.value)`)}
+          <button type="button" class="btn outline" onclick="tpMove(${i},-1)" ${i===0?"disabled":""}>↑</button>
+          <button type="button" class="btn outline" onclick="tpMove(${i},1)" ${i===pickerSelection.length-1?"disabled":""}>↓</button>
+          <button type="button" class="btn danger" onclick="tpRemove(${i})">×</button>
+        </div>`;}).join("")
+    : '<div class="empty">Nothing selected yet. Pick items below.</div>';
+  // Available objects (object kind only). Tap again to add more of the same.
+  document.getElementById("tpChoices").innerHTML=Object.entries(TYPES)
+    .filter(([k,t])=>(t.kind||"furniture")==="object"&&k!=="table")
+    .map(([k,t])=>{
+      const n=pickerSelection.filter(x=>x.type===k).length;
+      return `<button type="button" class="palette-item ${n?"active":""}" onclick="tpAdd('${k}')">
+        <span class="palette-swatch" style="background:${t.bg}">${iconHTML(t.icon)}</span>
+        <div><b>${esc(t.name)}</b><small>${n?`${n} on table · tap to add another`:"Tap to add"}</small></div></button>`;}).join("");
+}
+function tpAdd(k){
+  if(pickerSelection.length>=pickerCap()) return toast("No free slot. Raise 'Objects per square' or make the table bigger.");
+  pickerSelection.push({type:k,rfid:"",status:"In Service"});
+  renderTablePicker();
+}
+function tpSetSplit(v){
+  const old=pickerSplit; pickerSplit=v;
+  if(pickerSelection.length>pickerCap()){ pickerSplit=old; toast("Remove some items first, then lower the split."); }
+  renderTablePicker();
+}
+function tpQuickSet(){
+  const set=["computer","monitor","keyboard","mouse"];
+  if(pickerSplit<set.length) pickerSplit=set.length;   // one whole set per table square
+  const need=pickerSelection.length+set.length;
+  while(pickerCap()<need&&pickerSplit<6) pickerSplit++;
+  if(pickerCap()<need) return toast("Not enough room. Make the table bigger.");
+  set.forEach(t=>pickerSelection.push({type:t,rfid:"",status:"In Service"}));
+  renderTablePicker();
+  toast("Whole PC set added.");
+}
+function tpSetStatus(i,v){ if(pickerSelection[i]) pickerSelection[i].status=v; renderTablePicker(); }
+function tpSetTag(i,raw){
+  const x=pickerSelection[i]; if(!x) return;
+  const others=pickerSelection.filter((_,j)=>j!==i).map(y=>y.rfid).filter(Boolean);
+  const code=claimTag(raw,x.type,x.rfid,pickerTableUid,x.status,others);
+  if(code!==null) x.rfid=code;
+  const enter=window.__tagEnter; window.__tagEnter=false;
+  renderTablePicker();
+  if(enter){ const ins=document.querySelectorAll("#tpOrder .tag-input"); if(ins[i+1]) ins[i+1].focus(); }   // scanner: jump to the next item
+}
+function tpMove(i,dir){
+  const j=i+dir;
+  if(j<0||j>=pickerSelection.length) return;
+  [pickerSelection[i],pickerSelection[j]]=[pickerSelection[j],pickerSelection[i]];
+  renderTablePicker();
+}
+function tpRemove(i){ pickerSelection.splice(i,1); renderTablePicker(); }
+function saveTablePicker(){
+  const items=getItems(currentRoom());
+  const tbl=items.find(i=>i.uid===pickerTableUid); if(!tbl) return;
+  tbl.split=pickerSplit;
+  // Replace this table's items with the picked order
+  let uid=nextUid(items);
+  const kept=items.filter(i=>i.onTable!==pickerTableUid);
+  const kids=pickerSelection.map(x=>({uid:uid++,type:x.type,x:tbl.x,y:tbl.y,rot:0,onTable:pickerTableUid,rfid:x.rfid||"",status:x.status||"In Service"}));
+  layouts[currentRoom()]=[...kept,...kids];
+  saveLayouts(); closeModal("tablePickerModal"); selectedUid=pickerTableUid;
+  renderRoom(); toast("Table items saved.");
+}
+function movePlacedOnTable(tableUid,childUid,dir){
+  const items=getItems(currentRoom());
+  const kids=items.filter(i=>i.onTable===tableUid);
+  const idx=kids.findIndex(k=>k.uid===childUid);
+  const j=idx+dir;
+  if(idx<0||j<0||j>=kids.length) return;
+  // Swap positions in the main array so the order is preserved
+  const a=items.indexOf(kids[idx]), b=items.indexOf(kids[j]);
+  [items[a],items[b]]=[items[b],items[a]];
+  saveLayouts(); renderRoom();
+}
+
+
+/* ================= RFID IN THE ROOM LAYOUT ================= */
+// All tags already linked to an item in any layout (optionally ignoring one table's items)
+function usedTagSet(exceptTableUid){
+  const used=new Set();
+  Object.values(layouts).forEach(list=>list.forEach(i=>{
+    if(i.rfid && !(exceptTableUid!=null && i.onTable===exceptTableUid)) used.add(i.rfid.toLowerCase());
+  }));
+  return used;
+}
+function statusSelectHTML(current,onchange){
+  const cur=current||"In Service";
+  return `<select class="field status-sel" title="Status" onchange="${onchange}">${STATUSES.map(v=>`<option ${v===cur?"selected":""}>${v}</option>`).join("")}</select>`;
+}
+// Tag box: type it, scan it (a scanner types the code + Enter), or pick one of the saved numbers
+function tagInputHTML(lab,current,used,onchange,id,typeKey,scanTarget){
+  const nm=typeKey&&TYPES[typeKey]?TYPES[typeKey].name.toLowerCase():"";
+  let pool=assets.filter(a=>a.rfid&&a.room===lab&&(!used.has(a.rfid.toLowerCase())||a.rfid===current));
+  pool.sort((a,b)=>{const am=nm&&a.name.toLowerCase().includes(nm)?0:1, bm=nm&&b.name.toLowerCase().includes(nm)?0:1; return am-bm||a.rfid.localeCompare(b.rfid);});
+  const dl=`<datalist id="${id}">${pool.map(a=>`<option value="${esc(a.rfid)}">${esc(a.name)}</option>`).join("")}</datalist>`;
+  return `<input class="field tag-input" list="${id}" value="${esc(current||"")}" placeholder="Type, scan or pick tag" autocomplete="off" onchange="${onchange}" onkeydown="if(event.key==='Enter'){event.preventDefault();window.__tagEnter=true;this.blur();}">${dl}`
+    +(scanTarget?`<button type="button" class="btn secondary tag-scan" title="Tap the sticker to your NFC phone" onclick="openTagScan('${scanTarget}')"><i class='ic-tag'></i> Tap tag</button>`:"");
+}
+// Checks a typed/scanned code; saves it as a registered tag when it is new. Returns the code, "" to clear, or null if refused.
+function claimTag(raw,typeKey,current,exceptTableUid,status,alsoUsed){
+  const code=String(raw||"").trim();
+  if(!code) return "";
+  const low=code.toLowerCase();
+  if(current&&current.toLowerCase()===low) return code;
+  const used=usedTagSet(exceptTableUid);
+  (alsoUsed||[]).forEach(c=>used.add(String(c).toLowerCase()));
+  if(used.has(low)){ toast("Tag "+code+" is already used on another item."); return null; }
+  const lab=currentRoom();
+  if(!assets.some(a=>a.rfid&&a.rfid.toLowerCase()===low)){
+    const name=TYPES[typeKey]?TYPES[typeKey].name:"Item";
+    const nm=name.toLowerCase();
+    const wait=assets.find(a=>a.room===lab&&!a.rfid&&a.qty>0&&(a.name.toLowerCase().includes(nm)||nm.includes(a.name.toLowerCase())));
+    if(wait&&wait.qty>1){ wait.qty--; assets.push({id:nid(assets),name:wait.name,rfid:code,room:lab,qty:1,status:wait.status}); }
+    else if(wait){ wait.rfid=code; }
+    else assets.push({id:nid(assets),name,rfid:code,room:lab,qty:1,status:status||"In Service"});
+    persist(); if(typeof refreshAll==="function") refreshAll();
+    toast("Tag "+code+" saved and linked.");
+  }
+  return code;
+}
+function tagSelectHTML(lab,current,used,onchange){
+  const pool=assets.filter(a=>a.rfid&&a.room===lab&&(!used.has(a.rfid.toLowerCase())||a.rfid===current));
+  let opts=pool.map(a=>`<option value="${esc(a.rfid)}" ${a.rfid===current?"selected":""}>${esc(a.rfid)} · ${esc(a.name)}</option>`).join("");
+  if(current&&!pool.some(a=>a.rfid===current)) opts=`<option value="${esc(current)}" selected>${esc(current)} (not in inventory)</option>`+opts;
+  return `<select class="field" onchange="${onchange}"><option value="">No tag</option>${opts}</select>`;
+}
+function rfidControl(o){
+  return `<div class="table-ctl">RFID tag ${tagInputHTML(currentRoom(),o.rfid||"",usedTagSet(null),`linkTag(${o.uid},this.value)`,"tglSel",o.type,"o:"+o.uid)} ${statusSelectHTML(o.status,`linkStatus(${o.uid},this.value)`)}
+    <span style="color:var(--muted)">Only tags registered in ${esc(currentRoom())} are listed.</span></div>`;
+}
+function linkStatus(uid,v){
+  const o=getItems(currentRoom()).find(i=>i.uid===uid); if(!o) return;
+  o.status=v; saveLayouts(); renderRoom(); toast("Status set to "+v+".");
+}
+function linkTag(uid,raw){
+  const o=getItems(currentRoom()).find(i=>i.uid===uid); if(!o) return;
+  window.__tagEnter=false;
+  const code=claimTag(raw,o.type,o.rfid,null,o.status);
+  if(code===null){ renderRoom(); return; }
+  o.rfid=code;
+  saveLayouts(); renderRoom();
+  toast(code?`Tag ${code} linked.`:"Tag removed from this item.");
+}
+function autoLinkTags(){
+  const lab=currentRoom(), items=getItems(lab), used=usedTagSet(null);
+  const pool=assets.filter(a=>a.rfid&&a.room===lab&&!used.has(a.rfid.toLowerCase()));
+  let n=0;
+  items.forEach(o=>{
+    if(o.rfid||!TYPES[o.type]) return;
+    const nm=TYPES[o.type].name.toLowerCase();
+    const idx=pool.findIndex(a=>{const an=a.name.toLowerCase(); return an.includes(nm)||nm.includes(an);});
+    if(idx>-1){ o.rfid=pool[idx].rfid; pool.splice(idx,1); n++; }
+  });
+  saveLayouts(); renderRoom();
+  toast(n?`${n} item(s) linked to RFID tags.`:"No free tags in this lab match the placed items.");
+}
+function rfidRows(){
+  const items=getItems(currentRoom());
+  return items.filter(i=>i.rfid).map(i=>{
+    const t=TYPES[i.type]||{name:i.type};
+    const tbl=i.onTable?items.find(x=>x.uid===i.onTable):null;
+    const pos=tbl?`On the table at column ${tbl.x+1}, row ${tbl.y+1}`:`Column ${i.x+1}, row ${i.y+1}`;
+    const a=assets.find(x=>x.rfid&&x.rfid.toLowerCase()===i.rfid.toLowerCase());
+    return {uid:i.uid,code:i.rfid,name:t.name,asset:a?a.name+(a.model?" · "+a.model:""):"",pos};
+  }).sort((a,b)=>a.code.localeCompare(b.code));
+}
+function matchedRfidRows(){
+  const q=(document.getElementById("rfidFind").value||"").trim().toLowerCase();
+  return rfidRows().filter(r=>!q||(r.code+" "+r.name+" "+r.asset).toLowerCase().includes(q));
+}
+function renderRfidPanel(){
+  const q=(document.getElementById("rfidFind").value||"").trim().toLowerCase();
+  const rows=matchedRfidRows(), msg=document.getElementById("rfidFindMsg");
+  msg.textContent="";
+  if(q&&!rows.length){
+    const a=assets.find(x=>x.rfid&&x.rfid.toLowerCase().includes(q));
+    msg.textContent=a
+      ? `${a.rfid} is registered to ${a.name} in ${a.room}, but it is not linked to an item in this room layout yet.`
+      : "No registered tag matches that search.";
+  }
+  document.getElementById("rfidPanelList").innerHTML=rows.map(r=>`
+    <div class="rf-row">
+      <span class="rf-code">${esc(r.code)}</span>
+      <div class="rf-meta"><b>${esc(r.name)}</b>${r.asset?` <span style="color:var(--muted)">(${esc(r.asset)})</span>`:""}<small>${esc(r.pos)}</small></div>
+      <button class="btn secondary" onclick="locateItem(${r.uid})">Locate</button>
+    </div>`).join("")||(q?"":'<div class="empty">No items in this room have an RFID tag yet. Select an item and link a tag, or press Auto-link tags.</div>');
+}
+function locateFirst(){ const r=matchedRfidRows()[0]; if(r) locateItem(r.uid); }
+function locateItem(uid){
+  const items=getItems(currentRoom());
+  const o=items.find(i=>i.uid===uid); if(!o) return;
+  const host=o.onTable||o.uid;
+  selectedUid=host; renderRoom();
+  const el=document.querySelector(`.room-obj[data-uid="${host}"]`); if(!el) return;
+  el.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+  el.classList.add("flash");
+  if(o.onTable){ const k=el.querySelector(`[data-kid="${o.uid}"]`); if(k) k.classList.add("flash"); }
+  setTimeout(()=>el.classList.remove("flash"),2400);
+}
+
+/* ================= SAVED ROOMS & LABORATORIES ================= */
+function saveRoomDesign(){
+  const lab=currentRoom(), items=getItems(lab);
+  if(!items.length) return toast("Place something in the room before saving it.");
+  const name=`${lab} Layout`;
+  const snap={items:JSON.parse(JSON.stringify(items)),cols:COLS,rows:ROWS,savedAt:nowStr()};
+  const found=savedRooms.find(r=>r.lab===lab&&r.name.toLowerCase()===name.toLowerCase());
+  if(found){ Object.assign(found,snap); toast(`"${name}" updated.`); }
+  else { savedRooms.push({id:nid(savedRooms),lab,name,...snap}); toast(`"${name}" saved.`); }
+  persist(); renderSavedRooms(); renderDashboard();
+}
+function renderSavedRooms(){
+  document.getElementById("roomCounts").innerHTML=labs.map(l=>{
+    const n=savedRooms.filter(r=>r.lab===l).length;
+    return `<span class="lab-count ${n?"":"zero"}">${esc(l)} <b>${n}</b></span>`;
+  }).join("");
+  document.getElementById("savedRoomRows").innerHTML=savedRooms.map(r=>{
+    const tagged=r.items.filter(i=>i.rfid).length;
+    return `<tr><td><b>${esc(r.name)}</b></td><td>${esc(r.lab)}</td><td>${r.cols} × ${r.rows} tiles</td><td>${r.items.length}</td><td>${tagged}</td><td>${esc(r.savedAt||"")}</td>
+      <td><button class="btn secondary" onclick="loadRoomDesign(${r.id})">Open</button> <button class="btn danger" onclick="deleteRoomDesign(${r.id})">Delete</button></td></tr>`;
+  }).join("")||'<tr><td colspan="7" class="empty">No rooms saved yet. Design a room above, give it a name, and press Save Layout.</td></tr>';
+}
+function loadRoomDesign(id){
+  const r=savedRooms.find(x=>x.id===id); if(!r) return;
+  if(!confirm(`Open "${r.name}" in the editor? Unsaved changes to the current ${r.lab} layout will be replaced.`)) return;
+  document.getElementById("layoutRoom").value=r.lab;
+  layouts[r.lab]=JSON.parse(JSON.stringify(r.items));
+  roomSizes[r.lab]={cols:r.cols,rows:r.rows};
+  selectedUid=null; activeTool=null;
+  renderRoom();
+  window.scrollTo({top:0,behavior:"smooth"});
+  toast(`"${r.name}" opened.`);
+}
+function deleteRoomDesign(id){
+  const r=savedRooms.find(x=>x.id===id); if(!r) return;
+  if(!confirm(`Delete saved room "${r.name}"?`)) return;
+  savedRooms=savedRooms.filter(x=>x.id!==id);
+  persist(); renderSavedRooms(); renderDashboard(); toast("Saved room deleted.");
+}
+function fillLabSelects(){
+  const opts=labs.map(l=>`<option>${esc(l)}</option>`).join("");
+  document.querySelectorAll("select[data-labs]").forEach(sel=>{
+    const keep=sel.value;
+    sel.innerHTML=(sel.dataset.labs==="all"?'<option value="">All Rooms</option><option value="Unassigned">Unassigned</option>':"")+opts;
+    if([...sel.options].some(o=>o.value===keep)) sel.value=keep;
+  });
+}
+document.getElementById("labForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=String(new FormData(e.target).get("name")).trim();
+  if(!name) return;
+  if(labs.some(l=>l.toLowerCase()===name.toLowerCase())) return toast("That laboratory already exists.");
+  labs.push(name); persist(); fillLabSelects();
+  document.getElementById("layoutRoom").value=name;
+  e.target.reset(); closeModal("labModal"); changeRoom(); refreshAll();
+  toast(name+" added.");
+});
+
+/* Custom furniture / equipment */
+function openItemModal(){
+  document.getElementById("itemForm").reset();
+  pickedIcon=ICONS[0];
+  document.getElementById("iconGrid").innerHTML=ICONS.map(ic=>`<button type="button" class="icon-opt ${ic===pickedIcon?"active":""}" data-ic="${ic}">${iconHTML(ic)}</button>`).join("");
+  previewItem();
+  openModal("itemModal");
+}
+function previewItem(){
+  const f=new FormData(document.getElementById("itemForm"));
+  const w=+f.get("w"), h=+f.get("h");
+  const p=document.getElementById("itemPreview");
+  p.style.cssText=`width:${w*34}px;height:${h*34}px;background:${f.get("bg")}`;
+  p.innerHTML=`<span>${iconHTML(pickedIcon)}</span><b>${esc(f.get("name")||"Name")}</b>`;
+}
+document.getElementById("iconGrid").addEventListener("click",e=>{
+  const b=e.target.closest(".icon-opt"); if(!b) return;
+  pickedIcon=b.dataset.ic;
+  document.querySelectorAll(".icon-opt").forEach(x=>x.classList.toggle("active",x===b));
+  previewItem();
+});
+document.getElementById("itemForm").addEventListener("input",previewItem);
+document.getElementById("itemForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const name=String(f.get("name")).trim();
+  if(!name) return toast("Enter an item name.");
+  customTypes.push({key:"c"+Date.now(),name,icon:pickedIcon,w:+f.get("w"),h:+f.get("h"),bg:f.get("bg"),kind:f.get("kind")||"furniture"});
+  rebuildTypes(); persist(); closeModal("itemModal"); renderRoom();
+  toast(name+" added to the palette.");
+});
+function deleteType(key){
+  if(key==="table") return toast("The table can't be removed.");
+  const t=TYPES[key]; if(!t) return;
+  if(!confirm(`Delete "${t.name}"? Placed copies in all rooms will be removed too.`)) return;
+  if(customTypes.some(c=>c.key===key)) customTypes=customTypes.filter(c=>c.key!==key); else if(!hiddenTypes.includes(key)) hiddenTypes.push(key);
+  Object.keys(layouts).forEach(r=>layouts[r]=layouts[r].filter(i=>i.type!==key));
+  if(activeTool===key) activeTool=null;
+  rebuildTypes(); persist(); renderRoom(); toast("Item deleted.");
+}
+
+/* Palette and floor events */
+document.getElementById("palette").addEventListener("click",e=>{
+  const del=e.target.closest(".pdel");
+  if(del){e.stopPropagation(); if(del.dataset.delasset) deleteAsset(del.dataset.delasset); else deleteType(del.dataset.del); return;}
+  const b=e.target.closest(".palette-item"); if(!b) return;
+  const assetName=b.dataset.aname?decodeURIComponent(b.dataset.aname):null;
+  const k=assetName?ensureAssetType(assetName):b.dataset.key;
+  activeTool=activeTool===k?null:k;
+  activeAsset=activeTool&&assetName?{name:assetName,room:decodeURIComponent(b.dataset.aroom||"")}:null;
+  placeRot=0; selectedUid=null; renderRoom();
+});
+document.getElementById("palette").addEventListener("dragstart",e=>{
+  const b=e.target.closest(".palette-item"); if(!b) return;
+  const assetName=b.dataset.aname?decodeURIComponent(b.dataset.aname):null;
+  const k=assetName?ensureAssetType(assetName):b.dataset.key;
+  e.dataTransfer.setData("text/plain",k);
+  if(assetName) e.dataTransfer.setData("application/x-lams-asset",JSON.stringify({name:assetName,room:decodeURIComponent(b.dataset.aroom||"")}));
+  e.dataTransfer.effectAllowed="copy";
+});
+document.querySelector(".room-stage").addEventListener("wheel",e=>{
+  if(e.ctrlKey||e.metaKey){ e.preventDefault(); zoomRoom(e.deltaY<0?1:-1); }
+},{passive:false});
+const floorEl=document.getElementById("roomFloor");
+floorEl.addEventListener("pointerdown",e=>{
+  if(activeTool){const c=getCell(e); placeAt(c.x,c.y); return;}
+  if(e.target===floorEl){selectedUid=null; renderRoom();}
+});
+floorEl.addEventListener("dragover",e=>e.preventDefault());
+floorEl.addEventListener("drop",e=>{
+  e.preventDefault();
+  const key=e.dataTransfer.getData("text/plain");
+  if(!TYPES[key]) return;
+  const t=TYPES[key];
+  const w=placeRot?t.h:t.w, h=placeRot?t.w:t.h;
+  const c=getCell(e);
+  const rawAsset=e.dataTransfer.getData("application/x-lams-asset");
+  activeAsset=rawAsset?JSON.parse(rawAsset):null;
+  const hostTbl=getItems(currentRoom()).find(i=>i.type==="table"&&!i.onTable&&cellInside(i,c.x,c.y));
+  if(hostTbl&&(t.kind||"furniture")==="object"&&key!=="table"){ addToTable(hostTbl,key); activeAsset=null; return; }
+  activeTool=key;
+  placeAt(c.x-Math.floor(w/2), c.y-Math.floor(h/2));
+  activeTool=null; activeAsset=null; renderRoom();
+});
+document.addEventListener("keydown",e=>{
+  if(!document.getElementById("rooms").classList.contains("active")) return;
+  if(["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
+  if(e.key==="r"||e.key==="R") rotateCurrent();
+  else if(e.key==="Delete"||e.key==="Backspace"){if(!activeTool) deleteSelected();}
+  else if(e.key==="Escape") cancelTool();
+});
+
+/* ================= NAVIGATION ================= */
+function toast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message; el.classList.add("show");
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>el.classList.remove("show"),2400);
+}
+function showPage(id){
+  document.querySelectorAll(".page-section").forEach(x=>x.classList.toggle("active",x.id===id));
+  document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x.dataset.page===id));
+  if(id==="rooms"){activeTool=null; renderRoom();}
+  if(id==="adminProfile") renderAdminProfile();
+  refreshAll();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
+function openAllNotifications(){
+  document.getElementById("notifPanel").classList.remove("show");
+  showPage("notifications");
+}
+
+
+/* ================= ADMINISTRATOR PROFILE ================= */
+let adminProfile={username:"admin",status:"Active",password:""};
+try{
+  const saved=JSON.parse(localStorage.getItem("lams_admin_profile")||"{}");
+  adminProfile={username:saved.username||"admin",status:saved.status||"Active",password:saved.password||""};
+  // wipe any personal details (name, email, department, contact, photo) saved by earlier versions
+  localStorage.setItem("lams_admin_profile",JSON.stringify(adminProfile));
+}catch(e){}
+function renderAdminProfile(){
+  document.getElementById("adminUsername").value=adminProfile.username||"admin";
+  document.getElementById("adminStatus").value=adminProfile.status||"Active";
+}
+function openAdminProfile(){showPage("adminProfile");renderAdminProfile();}
+document.getElementById("adminProfileForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const password=document.getElementById("adminPassword").value;
+  const confirm=document.getElementById("adminConfirmPassword").value;
+  if(password||confirm){
+    if(password.length<8){toast("Password must be at least 8 characters.");return;}
+    if(password!==confirm){document.getElementById("adminConfirmPassword").setCustomValidity("Passwords do not match.");document.getElementById("adminConfirmPassword").reportValidity();return;}
+  }
+  document.getElementById("adminConfirmPassword").setCustomValidity("");
+  adminProfile={...adminProfile,
+    username:document.getElementById("adminUsername").value.trim(),
+    status:document.getElementById("adminStatus").value
+  };
+  // A blank password means keep the existing credential unchanged.
+  if(password)adminProfile.password=password;
+  try{localStorage.setItem("lams_admin_profile",JSON.stringify(adminProfile));}catch(err){toast("Could not save the account settings.");return;}
+  document.getElementById("adminPassword").value="";
+  document.getElementById("adminConfirmPassword").value="";
+  renderAdminProfile(); toast("Administrator account saved.");
+});
+document.getElementById("adminConfirmPassword").addEventListener("input",function(){this.setCustomValidity("");});
+renderAdminProfile();
+
+/* ================= RECENT ACTIVITY TIMELINE ================= */
+function renderActivityTimeline(){
+  const el=document.getElementById("activityTimeline"); if(!el)return;
+  const recent=(logs||[]).slice(0,20);
+  el.innerHTML=recent.length?`<div class="activity-timeline">${recent.map((item,i)=>`
+    <div class="activity-entry">
+      <div class="activity-dot">${i===0?"●":"✓"}</div>
+      <div><b>${esc(item.text||"System activity")}</b><small>${esc(item.time||"")}</small></div>
+    </div>`).join("")}</div>`:'<div class="empty">No recent activity yet.</div>';
+}
+
+/* ================= NOTIFICATIONS ================= */
+document.getElementById("bellBtn").addEventListener("click",()=>document.getElementById("notifPanel").classList.toggle("show"));
+document.addEventListener("click",e=>{
+  if(!e.target.closest("#bellWrap")) document.getElementById("notifPanel").classList.remove("show");
+});
+function renderAlerts(){
+  const open=openAlerts(), n=open.length;
+  const badge=document.getElementById("bellBadge");
+  badge.textContent=n; badge.classList.toggle("hide",!n);
+  const nav=document.getElementById("navAlertCount");
+  nav.textContent=n; nav.classList.toggle("hide",!n);
+  document.getElementById("alertList").innerHTML=n
+    ? open.slice(0,8).map(a=>`
+        <div class="notif-item">
+          <div class="notif-icon ${a.type==="booking"?"booking":""}">${a.type==="booking"?"▣":"⚠"}</div>
+          <div class="notif-body">
+            <b>${esc(a.title)}</b>
+            <small>${esc(a.detail)}</small>
+            <small>${esc(a.time)}</small>
+            <button class="btn secondary" onclick="resolveAlert(${a.id})">Mark as resolved</button>
+          </div>
+        </div>`).join("")
+    : '<div class="empty">No lost equipment alerts.</div>';
+}
+function renderAlertsPage(){
+  document.querySelectorAll(".tab[data-f]").forEach(t=>t.classList.toggle("active",t.dataset.f===alertFilter));
+  const list=alerts.filter(a=>a.type==="lost"&&(alertFilter==="all"||a.status===alertFilter));
+  document.getElementById("allAlerts").innerHTML=list.map(a=>`
+    <div class="alert-row ${a.status==="resolved"?"resolved":""}">
+      <div class="notif-icon ${a.type==="booking"?"booking":""}">${a.type==="booking"?"▣":"⚠"}</div>
+      <div style="flex:1;min-width:0">
+        <div class="asset-name">${esc(a.title)}</div>
+        <div class="asset-sub">${esc(a.detail)}</div>
+        <div class="asset-sub">${esc(a.time)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;align-items:flex-end">
+        <span class="chip ${a.status==="open"?"ok":"zero"}">${a.status==="open"?"Open":"Resolved"}</span>
+        <button class="btn outline" onclick="toggleAlert(${a.id})">${a.status==="open"?"Mark as resolved":"Reopen"}</button>
+      </div>
+    </div>`).join("")||'<div class="empty">No lost equipment has been reported.</div>';
+}
+function setAlertFilter(f){alertFilter=f; renderAlertsPage();}
+function resolveAlert(id){
+  const a=alerts.find(x=>x.id===id); if(a) a.status="resolved";
+  persist(); refreshAll(); toast("Alert resolved.");
+}
+function toggleAlert(id){
+  const a=alerts.find(x=>x.id===id); if(!a) return;
+  a.status=a.status==="open"?"resolved":"open";
+  persist(); refreshAll();
+}
+function resolveAll(){
+  alerts=alerts.filter(a=>a.status!=="resolved");
+  persist(); refreshAll(); toast("Resolved lost-equipment alerts cleared.");
+}
+
+/* ================= DASHBOARD ================= */
+function statusClass(s){return s==="In Service"?"":(s==="Condemned"||s==="Lost")?"bad":"warn";}
+function renderDashboard(){
+  const sum=st=>assets.filter(a=>a.status===st).reduce((n,a)=>n+a.qty,0);
+  const total=assets.reduce((n,a)=>n+a.qty,0);
+  const service=sum("In Service"), maint=sum("Under Maintenance"), condemned=sum("Condemned");
+  document.getElementById("dTotal").textContent=total;
+  document.getElementById("dService").textContent=service;
+  document.getElementById("dCondemned").textContent=condemned;
+  document.getElementById("dMaint").textContent=maint;
+  document.getElementById("dAlerts").textContent=openAlerts().length;
+  document.getElementById("reportTotal").textContent=total;
+  document.getElementById("reportService").textContent=service;
+  document.getElementById("reportMaint").textContent=maint;
+  document.getElementById("reportCondemned").textContent=condemned;
+  const p=total?Math.round(service/total*100):0;
+  const c=total?Math.round(condemned/total*100):0;
+  document.getElementById("servicePercent").textContent=p+"%";
+  document.getElementById("condemnedPercent").textContent=c+"%";
+  document.getElementById("serviceBar").style.width=p+"%";
+  document.getElementById("condemnedBar").style.width=c+"%";
+  // Laboratories grid: assets and saved rooms per lab
+  const grid=document.getElementById("labGrid");
+  grid.innerHTML=labs.map(l=>{
+    const n=assets.filter(a=>a.room===l).reduce((t,a)=>t+a.qty,0);
+    const r=savedRooms.filter(x=>x.lab===l).length;
+    return `<button class="lab-tile" data-lab="${esc(l)}"><b>${esc(l)}</b><div class="lab-num">${n}<small>assets</small></div><div class="lab-rooms">${r} room${r===1?"":"s"}</div></button>`;
+  }).join("")||'<div class="empty">No laboratories yet.</div>';
+  grid.querySelectorAll(".lab-tile").forEach(b=>b.addEventListener("click",()=>openLab(b.dataset.lab)));
+}
+function openLab(lab){
+  showPage("rooms");
+  document.getElementById("layoutRoom").value=lab;
+  changeRoom();
+}
+
+/* ================= INVENTORY ================= */
+function filteredRecords(){
+  const q=document.getElementById("assetSearch").value.trim().toLowerCase();
+  const room=document.getElementById("roomFilter").value;
+  const status=document.getElementById("statusFilter").value;
+  return assets.filter(a=>
+    (a.name+" "+(a.model||"")+" "+(a.rfid||"")+" "+a.room).toLowerCase().includes(q) &&
+    (!room||a.room===room) && (!status||a.status===status));
+}
+function groupAssets(list){
+  const g={};
+  list.forEach(a=>{
+    const key=a.name+"||"+(a.model||"")+"||"+a.room;
+    if(!g[key]) g[key]={name:a.name,model:a.model||"",room:a.room,counts:{"In Service":0,"Under Maintenance":0,"Condemned":0,"Lost":0},rfids:[],untagged:0};
+    g[key].counts[a.status]+=a.qty;
+    if(a.rfid) g[key].rfids.push(a.rfid); else g[key].untagged+=a.qty;
+  });
+  return Object.values(g);
+}
+function renderAssets(){
+  const groups=groupAssets(filteredRecords());
+  currentGroups=groups;
+  document.getElementById("assetRows").innerHTML=groups.map((g,i)=>`
+    <tr>
+      <td><div class="asset-name">${esc(g.name)}</div><div class="asset-sub">${g.model?esc(g.model)+" · ":""}${g.rfids.length} tagged${g.untagged?` · ${g.untagged} unit(s) need a tag`:""}</div></td>
+      <td>${esc(g.room)}</td>
+      <td>${chip(g.counts["In Service"],"ok")}</td>
+      <td>${chip(g.counts["Under Maintenance"],"warn")}</td>
+      <td>${chip(g.counts["Condemned"],"bad")}</td>
+      <td>${chip(g.counts["Lost"],"bad")}</td>
+      <td>${g.rfids.length?g.rfids.map(r=>`<b>${esc(r)}</b>`).join("<br>"):"—"}</td>
+      <td><button class="btn secondary" onclick="openStatus(${i})">Update</button> ${g.room==="Unassigned"?`<button class="btn primary" onclick="openAssignLabModal(${i})">Assign Lab</button>`:""}</td>
+    </tr>`).join("")||'<tr><td colspan="8" class="empty">No matching assets found.</td></tr>';
+  document.getElementById("assetCount").textContent=groups.length+" asset(s)";
+  const sum=st=>assets.filter(a=>a.status===st).reduce((n,a)=>n+a.qty,0);
+  document.getElementById("sumService").textContent=sum("In Service");
+  document.getElementById("sumMaint").textContent=sum("Under Maintenance");
+  document.getElementById("sumCondemned").textContent=sum("Condemned");
+}
+function openModal(id){document.getElementById(id).classList.add("show");}
+function closeModal(id){document.getElementById(id).classList.remove("show"); if(id==="tagScanModal") endTagScan();}
+document.querySelectorAll(".modal-backdrop").forEach(el=>el.addEventListener("click",e=>{if(e.target===el) closeModal(el.id);}));
+
+document.getElementById("assetForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const name=String(f.get("name")||"").trim(), status=f.get("status");
+  const model=String(f.get("model")||"").trim();
+  const rfid=String(f.get("rfid")||"").trim(), qty=Math.max(1,Math.floor(+f.get("qty")||1));
+  if(!name) return toast("Enter an asset name.");
+  if(rfid&&qty>1) return toast("For multiple units, leave RFID Code blank and register a unique tag for each unit afterwards.");
+  if(rfid&&assets.some(a=>a.rfid&&a.rfid.toLowerCase()===rfid.toLowerCase())) return toast("That RFID code is already registered.");
+  for(let i=0;i<qty;i++){
+    assets.push({id:nid(assets),name,model,rfid:i===0?rfid:"",room:"Unassigned",qty:1,status});
+  }
+  addLog(`${qty} individual ${name} unit(s) added as Unassigned`);
+  e.target.reset(); closeModal("assetModal"); persist(); refreshAll();
+  toast(`${qty} separate unit record(s) created. Assign each to a laboratory manually.`);
+});
+
+/* Update condition: moves units from one condition to another, one row per asset */
+function openStatus(i){
+  const g=currentGroups[i]; if(!g) return;
+  const form=document.getElementById("statusForm");
+  form.dataset.name=g.name; form.dataset.room=g.room; form.dataset.model=g.model||"";
+  document.getElementById("statusTitle").textContent=`${g.name}${g.model?" ("+g.model+")":""} · ${g.room}`;
+  const fromSel=document.getElementById("statusFrom");
+  fromSel.innerHTML=STATUSES.map(s=>`<option value="${s}" ${g.counts[s]?"":"disabled"}>${s} (${g.counts[s]})</option>`).join("");
+  fromSel.value=STATUSES.find(s=>g.counts[s])||STATUSES[0];
+  syncQtyMax();
+  document.getElementById("statusTo").innerHTML=STATUSES.map(s=>`<option>${s}</option>`).join("");
+  document.getElementById("statusTo").value=fromSel.value==="In Service"?"Under Maintenance":"In Service";
+  openModal("statusModal");
+}
+function syncQtyMax(){
+  const form=document.getElementById("statusForm");
+  const from=document.getElementById("statusFrom").value;
+  const g=currentGroups.find(x=>x.name===form.dataset.name&&x.room===form.dataset.room&&(x.model||"")===(form.dataset.model||""));
+  const max=g?g.counts[from]:0;
+  const q=document.getElementById("statusQty");
+  q.max=max; if(+q.value>max) q.value=max||1;
+}
+document.getElementById("statusFrom").addEventListener("change",syncQtyMax);
+function moveUnits(name,room,from,to,qty,attached,model){
+  model=model||"";
+  let remaining=qty;
+  assets.filter(a=>a.name===name&&a.room===room&&a.status===from&&(a.model||"")===model).forEach(a=>{
+    if(remaining<=0) return;
+    const take=Math.min(a.qty,remaining);
+    remaining-=take; a.qty-=take;
+    const rfid=attached==="No"?"":(a.rfid||"");
+    const target=assets.find(x=>x!==a&&x.name===name&&x.room===room&&x.status===to&&(x.model||"")===model&&(x.rfid||"")===rfid);
+    if(target) target.qty+=take;
+    else assets.push({id:nid(assets),name,model,room,rfid,qty:take,status:to});
+  });
+  assets=assets.filter(a=>a.qty>0);
+}
+document.getElementById("statusForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const name=e.target.dataset.name, room=e.target.dataset.room, model=e.target.dataset.model||"";
+  const from=f.get("from"), to=f.get("status"), qty=+f.get("qty"), attached=f.get("attached");
+  if(from===to) return toast("Choose a different condition.");
+  const available=assets.filter(a=>a.name===name&&a.room===room&&a.status===from&&(a.model||"")===model).reduce((n,a)=>n+a.qty,0);
+  if(!qty||qty<1||qty>available) return toast(`Only ${available} unit(s) are ${from}.`);
+  const lostTags=assets.filter(a=>a.name===name&&a.room===room&&a.status===from&&(a.model||"")===model&&a.rfid).map(a=>a.rfid).slice(0,qty);
+  moveUnits(name,room,from,to,qty,attached,model);
+  if(to==="Lost"){
+    addAlert("lost",`Equipment lost: ${qty} × ${name}`,`${room} · RFID: ${lostTags.length?lostTags.join(", "):"No RFID tag registered"}`);
+  }
+  addLog(`${qty} × ${name} changed to ${to} (${room})`);
+  closeModal("statusModal"); persist(); refreshAll(); toast("Asset condition updated.");
+});
+
+/* Bulk add / subtract (subtract only touches In Service units) */
+let bulkDirection=1;
+function bulkChange(direction){
+  bulkDirection=direction;
+  document.getElementById("bulkTitle").textContent=direction===1?"Bulk Add Quantity":"Bulk Subtract Quantity";
+  document.getElementById("bulkAssetSelect").innerHTML=[...new Set(assets.map(a=>a.name))].map(n=>`<option>${esc(n)}</option>`).join("");
+  document.getElementById("bulkHint").textContent=direction===1?"Adds new units as In Service.":"Removes units that are In Service only.";
+  openModal("bulkModal");
+}
+document.getElementById("bulkForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const name=f.get("asset"), room=f.get("room"), qty=+f.get("qty");
+  if(bulkDirection===-1){
+    const matches=assets.filter(a=>a.name===name&&a.room===room&&a.status==="In Service");
+    const avail=matches.reduce((n,a)=>n+a.qty,0);
+    if(qty>avail) return toast(`Only ${avail} In Service unit(s) can be subtracted.`);
+    let remaining=qty;
+    for(const a of matches){const c=Math.min(a.qty,remaining); a.qty-=c; remaining-=c; if(!remaining) break;}
+    assets=assets.filter(a=>a.qty>0);
+    addLog(`${qty} × ${name} removed from ${room}`);
+  } else {
+    const target=assets.find(a=>a.name===name&&a.room===room&&a.status==="In Service"&&!a.rfid&&!a.model);
+    if(target) target.qty+=qty;
+    else assets.push({id:nid(assets),name,rfid:"",room,qty,status:"In Service"});
+    addLog(`${qty} × ${name} added to ${room}`);
+  }
+  closeModal("bulkModal"); persist(); refreshAll(); toast("Bulk quantity updated.");
+});
+
+function openAssignLabModal(groupIndex){
+  const g=currentGroups[groupIndex]; if(!g||g.room!=="Unassigned") return;
+  const units=assets.filter(a=>a.room==="Unassigned"&&a.name===g.name&&(a.model||"") === (g.model||""));
+  const unitSel=document.getElementById("assignUnitSelect");
+  unitSel.innerHTML=units.map(a=>`<option value="${a.id}">${esc(a.name)}${a.model?" ("+esc(a.model)+")":""} · Unit #${a.id} · ${esc(a.status)}</option>`).join("");
+  document.getElementById("assignLabSelect").innerHTML=labs.map(l=>`<option value="${esc(l)}">${esc(l)}</option>`).join("");
+  openModal("assignLabModal");
+}
+document.getElementById("assignLabForm").addEventListener("submit",e=>{
+  e.preventDefault(); const f=new FormData(e.target);
+  const a=assets.find(x=>x.id===+f.get("unit")); const lab=String(f.get("lab")||"");
+  if(!a||a.room!=="Unassigned") return toast("Select an unassigned unit.");
+  if(!labs.includes(lab)) return toast("Select a valid laboratory.");
+  a.room=lab; addLog(`${a.name} · Unit #${a.id} assigned to ${lab}`);
+  closeModal("assignLabModal"); persist(); refreshAll(); toast(`Unit #${a.id} assigned to ${lab}.`);
+});
+
+/* ================= RFID ================= */
+let batchPreferredUnit=null;
+function openBatchRfidModal(prefId){
+  batchPreferredUnit=prefId||null;
+  document.getElementById("rfidCode").value="";
+  const nfcOk="NDEFReader" in window;
+  document.getElementById("rfidNfcMsg").innerHTML=nfcOk
+    ? "<i class='ic-tag'></i> Tap the sticker to your NFC phone<small>Hold the sticker against the back of the phone. The code fills in automatically.</small>"
+    : "<i class='ic-tag'></i> NFC isn't available here<small>Open LAMS in Chrome on an NFC-enabled Android phone (HTTPS), or use a USB RFID reader.</small>";
+  openModal("rfidModal");
+  renderBatchPairList();
+  if(nfcOk) scanNfc();
+  setTimeout(()=>document.getElementById("rfidCode").focus(),180);
+}
+function openRfidModal(prefId){ openBatchRfidModal(prefId); }
+function renderBatchPairList(){
+  const waiting=assets.filter(a=>!a.rfid);
+  const rows=document.getElementById("batchPairRows");
+  document.getElementById("batchPairCount").textContent=`${waiting.length} individual unit(s) still need RFID tags.`;
+  rows.innerHTML=waiting.map(a=>`<tr style="${a.id===batchPreferredUnit?'background:#e8f7f7':''}"><td><b>${esc(a.name)}${a.model?' ('+esc(a.model)+')':''}</b><div class="asset-sub">Unit #${a.id}</div></td><td>${esc(a.room||'Unassigned')}</td><td>${esc(a.status)}</td><td><button class="btn secondary" onclick="pairBatchTag(${a.id})">Pair this unit</button></td></tr>`).join("")||'<tr><td colspan="4" class="empty">All equipment units have RFID tags registered.</td></tr>';
+}
+function pairBatchTag(id){
+  const field=document.getElementById("rfidCode");
+  const code=String(field.value||"").trim();
+  if(!code) return toast("Scan an RFID tag first, then choose the equipment unit to pair.");
+  if(assets.some(a=>a.rfid&&String(a.rfid).toLowerCase()===code.toLowerCase())) return toast("This RFID code is already paired. Scan a different sticker.");
+  const a=assets.find(x=>x.id===id&&!x.rfid);
+  if(!a) return toast("That unit is no longer waiting for a tag. Refresh the list.");
+  a.rfid=code;
+  addLog(`RFID tag ${code} paired with ${a.name} · Unit #${a.id}`);
+  persist(); refreshAll();
+  field.value=""; batchPreferredUnit=null; renderBatchPairList();
+  field.focus();
+  toast(`Paired ${code} with ${a.name} · Unit #${a.id}. Scan the next sticker.`);
+}
+function renderRFID(){
+  const tagged=assets.filter(a=>a.rfid);
+  const counts={}; tagged.forEach(a=>counts[a.rfid.toLowerCase()]=(counts[a.rfid.toLowerCase()]||0)+1);
+  const dups=Object.values(counts).filter(c=>c>1).length;
+  document.getElementById("tagStat").textContent=tagged.length;
+  document.getElementById("unassignedStat").textContent=assets.length-tagged.length;
+  document.getElementById("duplicateStat").textContent=dups;
+  document.getElementById("rfidAssetStat").textContent=assets.reduce((n,a)=>n+a.qty,0);
+  document.getElementById("untaggedRows").innerHTML=assets.map(a=>
+    `<tr><td><div class="asset-name">${esc(a.name)} · Unit #${a.id}</div><div class="asset-sub">${esc(a.model||"No model")}</div></td><td>${esc(a.room||"Unassigned")}</td><td><span class="status ${statusClass(a.status)}">${esc(a.status)}</span></td><td>${a.rfid?`<b>${esc(a.rfid)}</b>`:"—"}</td><td>${a.rfid?'<span class="status" style="background:#e5f5ed;color:#24784b">Paired</span>':'<span class="status" style="background:#fff4df;color:#946200">Not paired</span>'}</td></tr>`
+  ).join("")||'<tr><td colspan="5" class="empty">No equipment units in inventory.</td></tr>';
+  document.getElementById("rfidRows").innerHTML=tagged.map(a=>
+    `<tr><td><b>${esc(a.rfid)}</b></td><td><div class="asset-name">${esc(a.name)}</div>${a.model?`<div class="asset-sub">${esc(a.model)}</div>`:""}</td><td>${esc(a.room)}</td><td><span class="status ${statusClass(a.status)}">${esc(a.status)}</span></td><td>${a.qty}</td></tr>`
+  ).join("")||'<tr><td colspan="5" class="empty">No RFID tags registered.</td></tr>';
+}
+// Pairing is performed from the unit list using pairBatchTag(unitId).
+
+/* NFC scanning for the RFID code box */
+let lastScan={code:"",t:0}, nfcActive=false;
+function onScanned(raw){
+  const code=String(raw||"").trim(); if(!code) return;
+  const now=Date.now();
+  if(code===lastScan.code&&now-lastScan.t<2500) return; // ignore the same code while it stays in view
+  lastScan={code,t:now};
+  document.getElementById("rfidCode").value=code;
+  if(navigator.vibrate) try{navigator.vibrate(60);}catch(e){}
+  toast("Scanned "+code+". Select the matching equipment unit and press Pair.");
+}
+async function scanNfc(){
+  if(!("NDEFReader" in window)) return toast("NFC isn't supported in this browser.");
+  if(nfcActive) return toast("NFC is already waiting. Hold a tag near the back of the phone.");
+  try{
+    const r=new NDEFReader(); await r.scan(); nfcActive=true;
+    toast("Hold the tag near the back of your phone.");
+    r.onreading=ev=>onScanned(String(ev.serialNumber||"").toUpperCase());
+  }catch(err){ toast("NFC was blocked or isn't available."); }
+}
+
+/* Scanner for one item's tag box (tap the sticker to an NFC phone). A scan fills the item, then moves on to the next one without a tag. */
+let tagScanTarget=null, tsLast={code:"",t:0}, tsNfc=false;
+function tsLabel(){
+  const t=tagScanTarget; if(!t) return "";
+  if(t.kind==="p"){ const x=pickerSelection[t.i]; return x?`Scanning for: <b>${t.i+1}. ${esc((TYPES[x.type]||{name:x.type}).name)}</b>`:""; }
+  const o=getItems(currentRoom()).find(i=>i.uid===t.uid); return o&&TYPES[o.type]?`Scanning for: <b>${esc(TYPES[o.type].name)}</b>`:"";
+}
+function openTagScan(spec){
+  const [k,v]=spec.split(":");
+  tagScanTarget=k==="p"?{kind:"p",i:+v}:{kind:"o",uid:+v};
+  document.getElementById("tsTarget").innerHTML=tsLabel();
+  const nfcOk="NDEFReader" in window;
+  document.getElementById("tsNfcBtn").classList.toggle("hidden",!nfcOk);
+  document.getElementById("tsStatus").classList.add("hidden");
+  openModal("tagScanModal");
+  if(nfcOk) tagNfc(); else nfcStatus("<i class='ic-tag'></i> NFC isn't available here<small>Open LAMS in Chrome on an NFC-enabled Android phone (HTTPS) and tap the sticker to the back of the phone.</small>");
+}
+function endTagScan(){ stopTagNfc(); tagScanTarget=null; }
+function onTagScanned(raw){
+  const code=String(raw||"").trim(); if(!code||!tagScanTarget) return;
+  const now=Date.now();
+  if(code===tsLast.code&&now-tsLast.t<2500) return;   // same code still in view
+  tsLast={code,t:now};
+  if(navigator.vibrate) try{navigator.vibrate(60);}catch(e){}
+  const t=tagScanTarget;
+  if(t.kind==="o"){
+    linkTag(t.uid,code);
+    const o=getItems(currentRoom()).find(i=>i.uid===t.uid);
+    if(o&&o.rfid===code) closeModal("tagScanModal");
+    return;
+  }
+  tpSetTag(t.i,code);
+  if(!(pickerSelection[t.i]&&pickerSelection[t.i].rfid===code)) return;   // refused (duplicate): stay on this item
+  const nxt=pickerSelection.findIndex((x,j)=>j>t.i&&!x.rfid);
+  if(nxt<0){ closeModal("tagScanModal"); toast("All items on this table have a tag."); return; }
+  tagScanTarget={kind:"p",i:nxt};
+  document.getElementById("tsTarget").innerHTML=tsLabel();
+  if(tsNfc) nfcStatus("✓ Saved "+esc(code)+"<small>Now tap the next tag.</small>");
+}
+let tsNfcCtl=null;
+function nfcStatus(html){ const el=document.getElementById("tsStatus"); el.innerHTML=html; el.classList.remove("hidden"); }
+async function tagNfc(){
+  if(!("NDEFReader" in window)) return toast("NFC isn't supported in this browser. Use Chrome on an Android phone.");
+  if(tsNfc){ nfcStatus("<i class='ic-tag'></i> Ready<small>Hold the tag against the back of the phone.</small>"); return; }
+  try{
+    tsNfcCtl=new AbortController();
+    const r=new NDEFReader(); await r.scan({signal:tsNfcCtl.signal}); tsNfc=true;
+    nfcStatus("<i class='ic-tag'></i> Ready<small>Hold the tag against the back of the phone.</small>");
+    r.onreading=ev=>onTagScanned(String(ev.serialNumber||"").toUpperCase());
+    r.onreadingerror=()=>toast("Couldn't read that tag. Try again.");
+  }catch(err){
+    tsNfc=false;
+    nfcStatus("NFC is off or blocked<small>Turn on NFC in the phone settings, allow it when Chrome asks, and open the site over https.</small>");
+  }
+}
+function stopTagNfc(){ try{ if(tsNfcCtl) tsNfcCtl.abort(); }catch(e){} tsNfcCtl=null; tsNfc=false; }
+
+function exportCSV(){
+  const rows=[["Asset ID","Asset Name","Model","RFID Code","Room","Quantity","Condition"],...assets.map(a=>[a.id,a.name,a.model||"",a.rfid,a.room,a.qty,a.status])];
+  const csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
+  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  const link=document.createElement("a"); link.href=url; link.download="LAMS_inventory.csv"; link.click();
+  URL.revokeObjectURL(url);
+  toast("Inventory CSV exported.");
+}
+
+/* Global search: keeps the text while typing, and also searches RFID codes */
+function globalSearch(){
+  const q=document.getElementById("globalSearch").value;
+  if(!document.getElementById("inventory").classList.contains("active")) showPage("inventory");
+  document.getElementById("assetSearch").value=q;
+  renderAssets();
+}
+
+/* ================= BOOKINGS ================= */
+function conflicts(b){
+  return bookings.some(x=>x.id!==b.id&&x.status==="Approved"&&x.date===b.date&&x.start<b.end&&b.start<x.end);
+}
+function renderBookings(){
+  document.getElementById("bookingRows").innerHTML=bookings.map(b=>`
+    <tr>
+      <td><b>${esc(b.name)}</b></td>
+      <td>${esc(b.room)}</td>
+      <td>${fmtDate(b.date)}</td>
+      <td>${fmtTime(b.start)} – ${fmtTime(b.end)}</td>
+      <td>${esc(b.purpose||"—")}</td>
+      <td><span class="status ${b.status==="Pending"?"warn":b.status==="Approved"?"":"bad"}">${esc(b.status)}</span>${(()=>{const w=b.status!=="Rejected"?slotConflict(b.room,b.date,b.start,b.end,b.id,true):null; return w?`<div class="class-warn">Overlap: ${esc(w.text)}</div>`:"";})()}</td>
+      <td>${b.status==="Pending"
+        ?`<button class="btn secondary" onclick="bookingAction(${b.id},'Approved')">Approve</button> <button class="btn danger" onclick="bookingAction(${b.id},'Rejected')">Reject</button>`
+        :(b.status==="Approved"?`<button class="btn danger" onclick="bookingAction(${b.id},'Rejected')">Reject</button>`:"—")}</td>
+    </tr>`).join("")||'<tr><td colspan="7" class="empty">No booking requests yet.</td></tr>';
+}
+function bookingAction(id,status){
+  const b=bookings.find(x=>x.id===id); if(!b) return;
+  if(status==="Rejected"&&b.status==="Approved"&&!confirm(`Reject ${b.name}'s approved booking? It will be removed from the schedule.`)) return;
+  const apErr=document.getElementById("approvalError");
+  apErr.classList.add("hidden");
+  if(status==="Approved"){
+    const why=slotConflict(b.room,b.date,b.start,b.end,b.id,true);
+    if(why){
+      const free=freeRanges(b.room,b.date,Math.max(30,toMin(b.end)-toMin(b.start)),b.id);
+      apErr.innerHTML=`<b>Cannot approve ${esc(b.name)}'s request.</b> ${esc(why.text)}.<br>`+(free.length?`Available on ${esc(fmtDate(b.date))}: <b>${free.map(esc).join("</b>, <b>")}</b>. Reject this request and ask the requester to choose one of these times.`:`No free time is left on ${esc(fmtDate(b.date))}.`);
+      apErr.classList.remove("hidden");
+      apErr.scrollIntoView({behavior:"smooth",block:"nearest"});
+      return toast("Cannot approve: that time overlaps another booking or class.");
+    }
+  }
+  b.status=status;
+  alerts.forEach(a=>{if(a.bookingId===id) a.status="resolved";});
+  addLog(`Booking ${status.toLowerCase()}: ${b.name} · ${b.room}`);
+  persist(); refreshAll(); toast("Booking "+status.toLowerCase()+".");
+}
+document.getElementById("bookForm").addEventListener("input",()=>document.getElementById("bookError").classList.add("hidden"));
+document.getElementById("bookForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const b={
+    id:nid(bookings), name:String(f.get("name")).trim(), room:f.get("room"),
+    date:f.get("date"), start:f.get("start"), end:f.get("end"),
+    purpose:String(f.get("purpose")||"").trim(), status:"Pending"
+  };
+  if(!b.date||!b.start||!b.end) return toast("Please fill in the date and times.");
+  if(b.end<=b.start) return toast("End time must be after start time.");
+  const errBox=document.getElementById("bookError");
+  document.getElementById("bookSuccess").classList.add("hidden");
+  const why=slotConflict(b.room,b.date,b.start,b.end);
+  if(why){
+    const free=freeRanges(b.room,b.date,Math.max(30,toMin(b.end)-toMin(b.start)));
+    errBox.innerHTML=`<b>That time is not available.</b> ${esc(why.text)}.<br>`+(free.length?`Available in ${esc(b.room)} on ${esc(fmtDate(b.date))} (${toMin(b.end)-toMin(b.start)} min or longer): <b>${free.map(esc).join("</b>, <b>")}</b>`:`No free time is left in ${esc(b.room)} on ${esc(fmtDate(b.date))}. Please pick another day or laboratory.`);
+    errBox.classList.remove("hidden");
+    return;
+  }
+  errBox.classList.add("hidden");
+  bookings.push(b);
+  addAlert("booking","New booking request",`${b.name} · ${b.room} · ${fmtDate(b.date)} ${fmtTime(b.start)}–${fmtTime(b.end)}`,b.id);
+  addLog(`Booking request from ${b.name} · ${b.room}`);
+  persist();
+  const box=document.getElementById("bookSuccess");
+  box.textContent=`Request sent for ${fmtDate(b.date)}, ${fmtTime(b.start)}–${fmtTime(b.end)}. Waiting for admin confirmation.`;
+  box.classList.remove("hidden");
+  e.target.reset();
+  refreshAll();
+});
+
+/* ================= SCHEDULE (weekly timetable) ================= */
+const DAYS=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const SCH_START=7*60, SCH_SLOTS=24, SLOT_PX=24; // 7:00 AM to 7:00 PM in 30-minute slots
+const CLASS_COLORS=["#d4f0f0","#c2e9e8","#e0f5f5","#b5e3e2","#d9efef","#cdeeed"];
+let schView="week", schAnchor=new Date(), schDrag=null, schSelectedDays=null, blockDrag=null, suppressClick=false;
+
+function classColor(code){let h=0;for(const c of String(code))h=(h*31+c.charCodeAt(0))|0;return CLASS_COLORS[Math.abs(h)%CLASS_COLORS.length];}
+function toMin(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
+function minToTime(m){return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
+function dowOf(d){return (d.getDay()+6)%7;} // 0 = Monday
+function mondayOf(d){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-dowOf(x));return x;}
+function sameDay(a,b){return a.toDateString()===b.toDateString();}
+
+function schedRange(){
+  if(schView==="day") return schAnchor.toLocaleDateString("en-PH",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+  if(schView==="week"){
+    const m=mondayOf(schAnchor), s=new Date(m); s.setDate(m.getDate()+6);
+    return m.toLocaleDateString("en-PH",{month:"short",day:"numeric"})+" – "+s.toLocaleDateString("en-PH",{month:"short",day:"numeric",year:"numeric"});
+  }
+  return schAnchor.toLocaleDateString("en-PH",{month:"long",year:"numeric"});
+}
+function schedNav(dir){
+  const d=new Date(schAnchor);
+  if(schView==="day") d.setDate(d.getDate()+dir);
+  else if(schView==="week") d.setDate(d.getDate()+7*dir);
+  else{d.setDate(1); d.setMonth(d.getMonth()+dir);}
+  schAnchor=d; renderSchedule();
+}
+function schedToday(){schAnchor=new Date(); renderSchedule();}
+function setSchedView(v){schView=v; renderSchedule();}
+
+function timeLabels(){
+  return Array.from({length:SCH_SLOTS},(_,i)=>`<div class="cal-time">${i%2===0?fmtTime(minToTime(SCH_START+i*30)):""}</div>`).join("");
+}
+function blockHTML(s,pos=""){
+  const top=(toMin(s.start)-SCH_START)/30*SLOT_PX;
+  const h=(toMin(s.end)-toMin(s.start))/30*SLOT_PX-3;
+  return `<div class="cal-block" data-sid="${s.id}" style="top:${top}px;height:${h}px;background:${classColor(s.code)};${pos}">
+    <b>${esc(s.code)}</b><small>${esc(s.room)}</small><small>${esc(s.label||"")}</small></div>`;
+}
+function bookingBlockHTML(b,pos=""){
+  const lo=Math.max(toMin(b.start),SCH_START), hi=Math.min(toMin(b.end),SCH_START+SCH_SLOTS*30);
+  if(hi<=lo) return "";
+  const top=(lo-SCH_START)/30*SLOT_PX, h=(hi-lo)/30*SLOT_PX-3;
+  return `<div class="cal-booking" title="${esc(b.purpose||"Approved booking")}" style="top:${top}px;height:${h}px;${pos}"><b>Booked</b><small>${esc(b.name)}</small><small>${esc(b.room)}</small></div>`;
+}
+function colHTML(dow,items,bks=[]){
+  const slots=Array.from({length:SCH_SLOTS},(_,i)=>`<div class="cal-slot" data-slot="${i}"></div>`).join("");
+  const all=[...items.map(x=>({k:"c",x,a:toMin(x.start),b:toMin(x.end)})),...bks.map(x=>({k:"b",x,a:Math.max(toMin(x.start),SCH_START),b:Math.min(toMin(x.end),SCH_START+SCH_SLOTS*30)}))].filter(e=>e.b>e.a).sort((p,q)=>p.a-q.a||p.b-q.b);
+  // group into clusters of mutually overlapping entries, give each a lane
+  let cluster=[],end=-1;
+  const flush=()=>{const lanes=[];cluster.forEach(e=>{let i=lanes.findIndex(le=>le<=e.a); if(i<0){i=lanes.length;lanes.push(0);} lanes[i]=e.b; e.lane=i;}); cluster.forEach(e=>e.n=lanes.length);};
+  all.forEach(e=>{ if(cluster.length&&e.a>=end){flush();cluster=[];end=-1;} cluster.push(e); end=Math.max(end,e.b); });
+  if(cluster.length) flush();
+  const html=all.map(e=>{
+    const pos=e.n>1?`left:calc(${e.lane}/${e.n}*100% + 4px);right:calc(${e.n-1-e.lane}/${e.n}*100% + 4px);`:"";
+    return e.k==="c"?blockHTML(e.x,pos):bookingBlockHTML(e.x,pos);
+  }).join("");
+  return `<div class="cal-col" data-day="${dow}">${slots}${html}</div>`;
+}
+function monthHTML(list){
+  const y=schAnchor.getFullYear(), m=schAnchor.getMonth();
+  const first=new Date(y,m,1), start=mondayOf(first);
+  const total=Math.ceil((dowOf(first)+new Date(y,m+1,0).getDate())/7)*7;
+  const today=new Date();
+  const cells=Array.from({length:total},(_,i)=>{
+    const d=new Date(start); d.setDate(start.getDate()+i);
+    const dow=dowOf(d);
+    const items=list.filter(s=>s.day===dow).sort((a,b)=>a.start.localeCompare(b.start));
+    const rf=document.getElementById("schedRoom").value;
+    const bks=bookings.filter(b=>b.status==="Approved"&&b.date===isoDate(d)&&(!rf||b.room===rf));
+    return `<div class="month-cell ${d.getMonth()!==m?"other":""} ${sameDay(d,today)?"today":""}" data-day="${dow}">
+      <span class="dnum">${d.getDate()}</span>
+      ${items.map(s=>`<div class="month-item" data-sid="${s.id}" style="background:${classColor(s.code)}">${fmtTime(s.start)} ${esc(s.code)} · ${esc(s.room)}</div>`).join("")}
+      ${bks.map(b=>`<div class="month-item booked" data-bk="1" title="${esc(b.purpose||"")}">${fmtTime(b.start)} Booked – ${esc(b.name)} · ${esc(b.room)}</div>`).join("")}
+    </div>`;
+  }).join("");
+  const heads=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(x=>`<div>${x}</div>`).join("");
+  return `<div class="month-head">${heads}</div><div class="month-grid">${cells}</div>`;
+}
+
+function renderSchedule(){
+  document.querySelectorAll("[data-sv]").forEach(t=>t.classList.toggle("active",t.dataset.sv===schView));
+  document.getElementById("schedRange").textContent=schedRange();
+
+  const roomSel=document.getElementById("schedRoom"), keep=roomSel.value;
+  const rooms=labs.slice();
+  roomSel.innerHTML=`<option value="">All Rooms</option>`+rooms.map(r=>`<option value="${esc(r)}" ${r===keep?"selected":""}>${esc(r)}</option>`).join("");
+  const list=schedules.filter(s=>!roomSel.value||s.room===roomSel.value);
+
+  const view=document.getElementById("schedView");
+  if(schView==="month"){view.innerHTML=monthHTML(list); return;}
+
+  const dows=schView==="day"?[dowOf(schAnchor)]:[0,1,2,3,4,5,6];
+  const mon=mondayOf(schAnchor);
+  const cols=dows.map(d=>{const dt=new Date(mon); dt.setDate(mon.getDate()+d); return {dow:d,date:dt};});
+  view.innerHTML=`<div class="cal-grid" style="--cols:${cols.length}">
+    <div class="cal-head">Time</div>
+    ${cols.map(c=>`<div class="cal-head ${sameDay(c.date,new Date())?"today":""}">${DAYS[c.dow].slice(0,3)}<small>${c.date.getDate()}</small></div>`).join("")}
+    <div class="cal-timecol">${timeLabels()}</div>
+    ${cols.map(c=>colHTML(c.dow,list.filter(s=>s.day===c.dow),bookings.filter(b=>b.status==="Approved"&&b.date===isoDate(c.date)&&(!roomSel.value||b.room===roomSel.value)))).join("")}
+  </div>`;
+}
+
+function paintDrag(){
+  document.querySelectorAll("#schedView .cal-slot").forEach(s=>{
+    const day=+s.parentElement.dataset.day, slot=+s.dataset.slot;
+    const dayLo=schDrag?Math.min(schDrag.startDay,schDrag.endDay):0;
+    const dayHi=schDrag?Math.max(schDrag.startDay,schDrag.endDay):0;
+    const timeLo=schDrag?Math.min(schDrag.a,schDrag.b):0;
+    const timeHi=schDrag?Math.max(schDrag.a,schDrag.b):0;
+    const on=!!schDrag&&day>=dayLo&&day<=dayHi&&slot>=timeLo&&slot<=timeHi;
+    s.classList.toggle("sel",on);
+  });
+}
+
+/* Drag an existing class: move it to another day column and/or another time */
+function columnAt(x,y){
+  const under=document.elementFromPoint(x,y);
+  const col=under&&under.closest(".cal-col");
+  return col?+col.dataset.day:null;
+}
+function startBlockDrag(e,blk){
+  const s=schedules.find(x=>x.id===+blk.dataset.sid); if(!s) return;
+  blockDrag={
+    s, el:blk, startX:e.clientX, startY:e.clientY, moved:false,
+    dur:toMin(s.end)-toMin(s.start), startMin:toMin(s.start),
+    newDay:s.day, newStart:s.start
+  };
+}
+document.addEventListener("pointermove",e=>{
+  if(!blockDrag) return;
+  const b=blockDrag;
+  if(!b.moved){
+    if(Math.hypot(e.clientX-b.startX,e.clientY-b.startY)<6) return;
+    b.moved=true;
+    b.el.classList.add("moving");
+  }
+  const dy=e.clientY-b.startY;
+  const snapped=Math.round(dy/SLOT_PX)*30;
+  let start=b.startMin+snapped;
+  start=Math.max(SCH_START,Math.min(start,SCH_START+SCH_SLOTS*30-b.dur));
+  b.newStart=minToTime(start);
+  const d=columnAt(e.clientX,e.clientY);
+  if(d!==null) b.newDay=d;
+  // Live preview: show the block under the pointer's day column
+  document.querySelectorAll("#schedView .cal-col").forEach(c=>c.classList.toggle("drop-target",+c.dataset.day===b.newDay));
+  b.el.style.top=((start-SCH_START)/30*SLOT_PX)+"px";
+  const col=b.el.parentElement;
+  const targetCol=document.querySelector(`#schedView .cal-col[data-day="${b.newDay}"]`);
+  if(targetCol && targetCol!==col){ targetCol.appendChild(b.el); }
+});
+document.addEventListener("pointerup",e=>{
+  if(!blockDrag) return;
+  const b=blockDrag; blockDrag=null;
+  document.querySelectorAll("#schedView .cal-col").forEach(c=>c.classList.remove("drop-target"));
+  b.el.classList.remove("moving");
+  if(!b.moved) return; // a plain click: let the click handler open the editor
+  suppressClick=true;
+  const newEnd=minToTime(toMin(b.newStart)+b.dur);
+  const data={...b.s,day:b.newDay,start:b.newStart,end:newEnd};
+  const clash=schedules.find(x=>x.id!==b.s.id&&x.day===data.day&&x.room===data.room&&
+    toMin(x.start)<toMin(data.end)&&toMin(data.start)<toMin(x.end));
+  if(clash){
+    toast(`Clashes with ${clash.code} in ${clash.room}.`);
+    renderSchedule(); return;
+  }
+  const bk=bookingClash(data);
+  if(bk){ toast(`Conflicts with an approved booking by ${bk.name} on ${fmtDate(bk.date)}.`); renderSchedule(); return; }
+  Object.assign(b.s,{day:data.day,start:data.start,end:data.end});
+  addLog(`Class ${b.s.code} moved · ${DAYS[data.day]} ${data.start}–${data.end}`);
+  persist(); refreshAll(); toast("Class moved.");
+});
+
+const schedView=document.getElementById("schedView");
+schedView.addEventListener("pointerdown",e=>{
+  const blk=e.target.closest(".cal-block");
+  if(blk && e.button===0){
+    e.preventDefault();
+    startBlockDrag(e,blk);
+    return;
+  }
+  const slot=e.target.closest(".cal-slot");
+  if(!slot||e.button!==0) return;
+  e.preventDefault();
+  const day=+slot.parentElement.dataset.day, time=+slot.dataset.slot;
+  schDrag={startDay:day,endDay:day,a:time,b:time};
+  schedView.classList.add("dragging"); paintDrag();
+});
+document.addEventListener("pointermove",e=>{
+  if(!schDrag) return;
+  const under=document.elementFromPoint(e.clientX,e.clientY);
+  const slot=under&&under.closest("#schedView .cal-slot");
+  if(!slot) return;
+  schDrag.endDay=+slot.parentElement.dataset.day;
+  schDrag.b=+slot.dataset.slot;
+  paintDrag();
+});
+document.addEventListener("pointerup",()=>{
+  if(!schDrag) return;
+  const lo=Math.min(schDrag.a,schDrag.b), hi=Math.max(schDrag.a,schDrag.b);
+  const first=Math.min(schDrag.startDay,schDrag.endDay);
+  const last=Math.max(schDrag.startDay,schDrag.endDay);
+  schSelectedDays=Array.from({length:last-first+1},(_,i)=>first+i);
+  schDrag=null;
+  schedView.classList.remove("dragging"); paintDrag();
+  openSchedModal({day:first,start:minToTime(SCH_START+lo*30),end:minToTime(SCH_START+(hi+1)*30)});
+});
+schedView.addEventListener("click",e=>{
+  if(suppressClick){suppressClick=false; return;}
+  if(e.target.closest("[data-bk]")) return;
+  const item=e.target.closest("[data-sid]");
+  if(item){openSchedModal({},+item.dataset.sid); return;}
+  const cell=e.target.closest(".month-cell");
+  if(cell) openSchedModal({day:+cell.dataset.day});
+});
+
+function openSchedModal(pre={},sid=null){
+  if(sid!==null || !pre.start) schSelectedDays=null;
+  const f=document.getElementById("schedForm");
+  f.reset();
+  const cur=sid!=null?schedules.find(s=>s.id===sid):null;
+  const v=cur||{day:pre.day??0,start:pre.start||"08:00",end:pre.end||"09:00",code:"",label:"",room:""};
+  f.elements.sid.value=cur?cur.id:"";
+  f.elements.code.value=v.code;
+  f.elements.label.value=v.label||"";
+  fillLabSelects();
+  f.elements.room.value=labs.includes(v.room)?v.room:(document.getElementById("schedRoom").value||labs[0]);
+  f.elements.day.value=String(v.day);
+  f.elements.start.value=v.start;
+  f.elements.end.value=v.end;
+  document.getElementById("schedModalTitle").textContent=cur?"Edit Class":"Add Class";
+  document.getElementById("schedDelete").classList.toggle("hidden",!cur);
+  openModal("schedModal");
+}
+document.getElementById("schedForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const sid=f.get("sid")?+f.get("sid"):null;
+  const data={
+    code:String(f.get("code")).trim(), label:String(f.get("label")||"").trim(),
+    room:String(f.get("room")).trim(), day:+f.get("day"),
+    start:f.get("start"), end:f.get("end")
+  };
+  if(toMin(data.end)<=toMin(data.start)) return toast("End time must be after start time.");
+  if(toMin(data.start)<SCH_START||toMin(data.end)>SCH_START+SCH_SLOTS*30) return toast("Classes must be between 7:00 AM and 7:00 PM.");
+  const days=sid?[data.day]:(schSelectedDays&&schSelectedDays.length?schSelectedDays:[data.day]);
+  const clashes=days.map(day=>schedules.find(s=>s.id!==sid&&s.day===day&&s.room===data.room&&
+    toMin(s.start)<toMin(data.end)&&toMin(data.start)<toMin(s.end))).filter(Boolean);
+  if(clashes.length) return toast(`Schedule conflicts with ${clashes[0].code} in ${clashes[0].room}.`);
+  for(const day of days){const bk=bookingClash({room:data.room,day,start:data.start,end:data.end}); if(bk) return toast(`Conflicts with an approved booking by ${bk.name} on ${fmtDate(bk.date)}.`);}
+  if(sid) Object.assign(schedules.find(s=>s.id===sid),data);
+  else days.forEach(day=>schedules.push({id:nid(schedules),...data,day}));
+  addLog(`Class ${data.code} ${sid?"updated":"added"} · ${days.map(d=>DAYS[d]).join(", ")} ${data.start}–${data.end}`);
+  schSelectedDays=null;
+  closeModal("schedModal"); persist(); refreshAll(); toast(days.length>1?`Schedule saved for ${days.length} days.`:"Schedule saved.");
+});
+function deleteSched(){
+  const sid=+document.getElementById("schedForm").elements.sid.value;
+  if(!sid) return;
+  if(!confirm("Delete this class?")) return;
+  schedules=schedules.filter(s=>s.id!==sid);
+  closeModal("schedModal"); persist(); refreshAll(); toast("Class deleted.");
+}
+
+/* ================= REFRESH & INIT ================= */
+function refreshAll(){
+  renderDashboard();
+  renderAssets();
+  renderRFID();
+  renderBookings();
+  renderAlerts();
+  renderAlertsPage();
+  renderSchedule();
+  renderSavedRooms();
+}
+restore();
+// Convert legacy quantity batches into one record per physical unit.
+(function expandLegacyUnits(){
+  const expanded=[]; let nextId=Math.max(0,...assets.map(a=>+a.id||0))+1;
+  assets.forEach(a=>{
+    const count=Math.max(1,Math.floor(+a.qty||1));
+    if(count===1){a.qty=1;expanded.push(a);return;}
+    for(let i=0;i<count;i++) expanded.push({...a,id:i===0?a.id:nextId++,rfid:i===0?(a.rfid||""):"",qty:1});
+  });
+  assets=expanded;
+})();
+rebuildTypes();
+fillLabSelects();
+refreshAll();
+renderRoom();
+</script>
+</body>
+</html>
